@@ -4,13 +4,6 @@ import { AppDataSource } from './database/dataSource';
 dotenv.config();
 import globalRouter from './routes';
 
-// declare global {
-//     namespace Express {
-//         export interface Request {
-//             userId?: number
-//         }
-//     }
-// }
 
 const app = express();
 const PORT = process.env.SERVER_PORT
