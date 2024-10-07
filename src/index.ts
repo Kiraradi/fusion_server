@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { AppDataSource } from './database/dataSource';
 dotenv.config();
 import globalRouter from './routes';
+import { hashPassword } from './services/hashPassword';
 
 
 const app = express();
@@ -20,4 +21,3 @@ app.use(globalRouter);
 app.listen(PORT, () => {
     console.log(`server listens on port ${PORT}`);
 })
-
