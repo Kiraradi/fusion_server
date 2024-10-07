@@ -7,27 +7,18 @@ export const getUserController = async (req: IMyRequest, res: Response) => {
     const userId = Number(req.body.id);
 
     if(!userId) {
-        res.status(500).send('invelif id');
+        res.status(500).send('invalid id');
     }
 
-    const foundUser = await userRepository.findOneBy({
+    const user = await userRepository.findOneBy({
         id: userId
     });
 
-    if(!foundUser) {
-        res.status(403).send('user not find');
+    if(!user) {
+        res.status(404).send('user not find');
         return;
     }
 
-    res.status(200).send(
-        {
-            foundUser: {
-                id: foundUser.id,
-                fullName: foundUser.fullName,
-                email: foundUser.email,
-                dayOfBirthday: foundUser.dayOfBirthday
-            }
-        }
-    );
+    res.status(200).send(user);
 
 }

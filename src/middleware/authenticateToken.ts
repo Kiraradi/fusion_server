@@ -12,10 +12,13 @@ export const authenticateToken = (req: IMyRequest, res: Response, next: NextFunc
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
     
-        if (token === null || token === undefined) {
+        // if (token === null || token === undefined) {
+        if (!token) {
             res.sendStatus(401);
             return
         }
+
+        // const data = await TokenService.verify(token);
     
         verify(token, tokenSecret, async (err, userId) => {
     

@@ -19,7 +19,6 @@ export const hashPassword = (
                 throw err;
             }
             callback(deriveKey.toString('hex'));
-            
         }
     ) 
 }
