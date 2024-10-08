@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import { AppDataSource } from './database/dataSource';
 dotenv.config();
 import globalRouter from './routes';
-import { hashPassword } from './services/hashPassword';
 
 
 const app = express();

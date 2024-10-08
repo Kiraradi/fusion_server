@@ -1,22 +1,13 @@
 import { Response } from "express";
 import { IMyRequest } from "../../types/types";
-import { userRepository } from "../../database/repositories/userRepository";
+import { getAllUsers } from "../../database/repositories/userRepository";
 
 
 export const getAllUsersController = async (req: IMyRequest, res: Response) => {
     try {
-        const allUsers = await userRepository.find();
+        const allUsers = await getAllUsers();
 
-        const usersWithoutPasswords = allUsers.map(user => {
-            return {
-                id: user.id,
-                fullName: user.fullName,
-                email: user.email,
-                dayOfBirthday: user.dayOfBirthday
-            }
-        })
-
-        res.send(usersWithoutPasswords);
+        res.send(allUsers);
         
     } catch (error) {
         res.status(500).send(error)

@@ -1,18 +1,15 @@
 import { Response } from "express"
-import { userRepository } from "../../database/repositories/userRepository"
+import { getOneById } from "../../database/repositories/userRepository"
 import { IMyRequest } from "../../types/types"
-
 
 export const getUserController = async (req: IMyRequest, res: Response) => {
     const userId = Number(req.body.id);
 
     if(!userId) {
-        res.status(500).send('invalid id');
+        res.status(404).send('id not find');
     }
 
-    const user = await userRepository.findOneBy({
-        id: userId
-    });
+    const user = await getOneById(userId);
 
     if(!user) {
         res.status(404).send('user not find');

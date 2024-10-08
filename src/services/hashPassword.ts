@@ -1,24 +1,14 @@
-import dotenv from 'dotenv';
 import crypto from 'crypto';
+import { PROCESS_ENV } from '../constants';
 
-dotenv.config();
- 
-
-export const hashPassword = (
-    passowd: string, 
-    callback: (hash:string) => void
-    ) => {
-    crypto.pbkdf2(
+export const hashingPassword = (passowd: string) => {
+    const hash = crypto.pbkdf2Sync(
         passowd,
-        process.env.TOKEN_SECRET as string,
-        Number(process.env.SERVER_HASH_ITERATIONS),
-        Number(process.env.SERVER_HASH_BYTES),
-        process.env.SERVER_HASH_DIGEST as string,
-        (err, deriveKey) => {
-            if (err) {
-                throw err;
-            }
-            callback(deriveKey.toString('hex'));
-        }
-    ) 
+        PROCESS_ENV.TOKEN_SECRET,
+        PROCESS_ENV.SERVER_HASH_ITERATIONS,
+        PROCESS_ENV.SERVER_HASH_BYTES,
+        PROCESS_ENV.SERVER_HASH_DIGEST,
+    )
+
+    return hash.toString('hex');
 }
