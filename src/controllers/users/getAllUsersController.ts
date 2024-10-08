@@ -1,9 +1,8 @@
-import { Response } from "express";
-import { IMyRequest } from "../../types/types";
+import { Response, Request } from "express";
 import { getAllUsers } from "../../database/repositories/userRepository";
 
 
-export const getAllUsersController = async (req: IMyRequest, res: Response) => {
+export const getAllUsersController = async (req: Request, res: Response) => {
     try {
         const allUsers = await getAllUsers();
 

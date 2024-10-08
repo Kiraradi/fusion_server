@@ -1,7 +1,7 @@
-import { Response } from "express";
-import { IMyRequest, IUserData } from "../../types/types";
+import { Response, Request } from "express";
+import { IUserData } from "../../types/types";
 
-export const editUserController = (req: IMyRequest, res: Response) => {
+export const editUserController = (req: Request, res: Response) => {
     const newDataOfUser: Partial<IUserData> = req.body;
 
 }

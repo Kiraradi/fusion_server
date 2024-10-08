@@ -1,15 +1,13 @@
 import { getOneByEmail, seveUser } from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
-import { IMyRequest, IUserData } from "../../types/types";
-import { Response } from "express";
+import { Response, Request} from "express";
 import { hashingPassword } from "../../services/hashPassword";
+import { IUser } from "../../types/types";
 
-
-export const registrationUserController = async (req: IMyRequest, res: Response) => {
+export const registrationUserController = async (req: Request<{}, {}, IUser>, res: Response) => {
     try {
         const userData = req.body;
-
-        const isEmainInDatabase = await getOneByEmail(userData.email );
+        const isEmainInDatabase = await getOneByEmail(userData.email);
     
         if (isEmainInDatabase) {
             res.status(404).send('email is busy');

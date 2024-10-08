@@ -11,7 +11,3 @@ export interface IUserData {
 export interface IUser extends IUserData{
     id: number
 }
-
-export interface IMyRequest extends Request {
-    user?: IUser | null
-}

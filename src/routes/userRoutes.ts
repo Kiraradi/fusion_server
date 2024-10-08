@@ -12,7 +12,7 @@ const userRouter = Router();
 
 
 userRouter.get('/all', getAllUsersController);
-userRouter.get('/user', getUserController);
+userRouter.get('/', getUserController);
 userRouter.put('edit', authenticateToken, editUserController)
 
 

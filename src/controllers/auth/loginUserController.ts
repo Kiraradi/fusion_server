@@ -1,5 +1,4 @@
-import { Response } from "express";
-import { IMyRequest } from "../../types/types";
+import { Response, Request } from "express";
 import { hashingPassword} from "../../services/hashPassword";
 import { getOneByEmailWithPassword } from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
@@ -9,9 +8,9 @@ interface IReqData {
     password: string
 }
 
-export const loginUserController = async (req: IMyRequest, res: Response) => {
+export const loginUserController = async (req: Request<{}, {}, IReqData>, res: Response) => {
     try {
-        const reqData: IReqData = req.body;
+        const reqData = req.body;
 
         const foundUser = await getOneByEmailWithPassword(reqData.email);
 

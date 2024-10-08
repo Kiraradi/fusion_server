@@ -1,10 +1,9 @@
-import { Response, NextFunction } from "express";
-import { IMyRequest } from "../types/types";
+import { Response, NextFunction, Request } from "express";
 import { getOneById } from "../database/repositories/userRepository";
 import { verifyAccessToken } from "../services/accessTokenService";
 
 
-export const authenticateToken = async (req: IMyRequest, res: Response, next: NextFunction) => {
+export const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
@@ -30,6 +29,4 @@ export const authenticateToken = async (req: IMyRequest, res: Response, next: Ne
     } catch (error) {
         res.status(500).send(error);
     }
-
-
 }
