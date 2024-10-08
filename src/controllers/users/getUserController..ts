@@ -5,7 +5,7 @@ interface IQuery {
     id: string
 }
 
-export const getUserController = async (req: Request<{}, {},{},IQuery>, res: Response) => {
+export const getUserController = async (req: Request<any, unknown, {},IQuery>, res: Response) => {
     try {
         const userId = Number(req.query.id);
     

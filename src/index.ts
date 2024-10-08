@@ -1,18 +1,22 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { AppDataSource } from './database/dataSource';
-dotenv.config();
-import globalRouter from './routes';
 
+import globalRouter from './routes';
+import { AppDataSource } from './database/dataSource';
+
+dotenv.config();
 
 const app = express();
-const PORT = process.env.SERVER_PORT
+const PORT = process.env.SERVER_PORT;
 
-AppDataSource.initialize().then(async() => {
-    console.log('Database initialized');
-}).catch(() => {
-    console.log('Database error initialize');
-});
+(async () => {
+    try {
+        await AppDataSource.initialize();
+        console.log('Database initialized');
+    } catch (err) {
+        console.log('Database error initialize');
+    }
+})();
 
 app.use(express.json());
 app.use(globalRouter);

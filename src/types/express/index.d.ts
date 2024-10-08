@@ -1,11 +1,11 @@
-import { IUser } from "../types";
+import { IUserWithoutPassord } from "../types";
 
 export {};
 
 declare global {
     namespace Express {
         export interface Request {
-            user?: IUser | null
+            user?: IUserWithoutPassord
         }
     }
 }

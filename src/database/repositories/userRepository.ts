@@ -1,3 +1,4 @@
+import { DeepPartial, FindOneOptions } from "typeorm";
 import { IUserData } from "../../types/types";
 import { AppDataSource } from "../dataSource";
 import { User } from "../entitys/User";
@@ -12,17 +13,63 @@ export const getOneById = (id: number) => {
     return userRepository.findOneBy({ id });
 }
 
-export const getOneByEmail = (email: string) => {
-    return userRepository.findOneBy({ email });
+export const getOneByEmail = async (email: string, options?: {
+    shouldThrowError?: boolean;
+    withPassword?: boolean;
+}) => {
+    const findOptions: FindOneOptions<User> = {
+        where: { email }
+    };
+    if (options && options.withPassword) {
+        findOptions.select = {
+            id: true,
+            fullName: true,
+            email: true,
+            password: true,
+            dayOfBirthday: true,
+        }
+    }
+    const user = await userRepository.findOne(findOptions);
+    if (!user && options && options.shouldThrowError) {
+        throw new Error();
+    }
+
+    return user;
 }
 
 export const getOneByEmailWithPassword = (email: string) => {
     return userRepository.findOne({
-        where:{email: email},
-        select:['id', 'fullName','email','password', 'dayOfBirthday']
+        where: { email },
+        select: ['id', 'fullName','email','password', 'dayOfBirthday']
+        // select: {
+        //     id: true,
+        //     fullName: true,
+        //     email: true,
+        //     password: true,
+        //     dayOfBirthday: true,
+        //     awf: true,
+        // }
+
     });
 }
 
-export const seveUser = (user: IUserData) => {
+export const saveUser = (user: IUserData) => {
     return userRepository.save(user);
+}
+
+export const update = (id: number, data: DeepPartial<User>) => {
+    return userRepository.update(id, data);
+}
+
+export default {
+    getAllUsers,
+    getOneById,
+    getOneByEmail,
+    getOneByEmailWithPassword,
+    saveUser,
+    update,
+}
+
+export class UserService {
+    static getAll = getAllUsers;
 }

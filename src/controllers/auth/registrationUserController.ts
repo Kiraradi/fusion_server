@@ -1,4 +1,4 @@
-import { getOneByEmail, seveUser } from "../../database/repositories/userRepository";
+import { getOneByEmail, saveUser } from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
 import { Response, Request} from "express";
 import { hashingPassword } from "../../services/hashPassword";
@@ -21,7 +21,7 @@ export const registrationUserController = async (req: Request<{}, {}, IUser>, re
             password: hashedPassword
         }
     
-        const user = await seveUser(userWithHash);
+        const user = await saveUser(userWithHash);
     
     
         if (!user.id) {

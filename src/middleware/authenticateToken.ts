@@ -16,11 +16,16 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
         const id = verifyAccessToken(token);
 
         if (!id) {
-            res.status(403).send('Token verification error');
+            res.status(401).send('Token verification error');
             return;
         }
 
         const user = await getOneById(id);
+
+        if(!user) {
+            res.status(404).send('User not finded');
+            return;
+        }
 
         req.user = user;
 
