@@ -3,17 +3,16 @@ import { DataSource } from "typeorm";
 import { User } from "./entitys/User";
 import { PROCESS_ENV } from "../constants";
 
-
 export const AppDataSource = new DataSource({
-    type: "postgres",
-    host: PROCESS_ENV.SERVER_HOST,
-    port: PROCESS_ENV.SERVER_DATADASE_PORT,
-    username: PROCESS_ENV.SERVER_DATADASE_USERNAME,
-    password: PROCESS_ENV.SERVER_DATADASE_PASSWORD,
-    database: PROCESS_ENV.SERVER_DATABASE_NAME,
-    synchronize: true, //
-    logging: false,
-    entities: [User], //
-    migrations: [], //
-    subscribers: [],
-})
+  type: "postgres",
+  host: PROCESS_ENV.SERVER_HOST,
+  port: PROCESS_ENV.SERVER_DATADASE_PORT,
+  username: PROCESS_ENV.SERVER_DATADASE_USERNAME,
+  password: PROCESS_ENV.SERVER_DATADASE_PASSWORD,
+  database: PROCESS_ENV.SERVER_DATABASE_NAME,
+  synchronize: true, //
+  logging: false,
+  entities: [User], //
+  migrations: [], //
+  subscribers: [],
+});

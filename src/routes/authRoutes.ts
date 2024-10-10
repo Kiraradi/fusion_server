@@ -7,7 +7,15 @@ import { registrationUserController } from "../controllers/auth/registrationUser
 
 const authRouter = Router();
 
-authRouter.post('/login', validateRequestBody(loginSchame), loginUserController);
-authRouter.post('/registration', validateRequestBody(registrationSchame), registrationUserController);
+authRouter.post(
+  "/login",
+  validateRequestBody(loginSchame),
+  loginUserController,
+);
+authRouter.post(
+  "/registration",
+  validateRequestBody(registrationSchame),
+  registrationUserController,
+);
 
 export default authRouter;
