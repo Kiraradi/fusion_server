@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { hashingPassword} from "../../services/hashPassword";
+import { hashingPassword } from "../../services/hashPassword";
 import { getOneByEmailWithPassword } from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
 
@@ -11,8 +11,6 @@ interface IReqData {
 export const loginUserController = async (req: Request<{}, {}, IReqData>, res: Response) => {
     try {
         const reqData = req.body;
-
-        console.log(reqData)
 
         const foundUser = await getOneByEmailWithPassword(reqData.email);
 
@@ -43,12 +41,4 @@ export const loginUserController = async (req: Request<{}, {}, IReqData>, res: R
     } catch (error) {
         res.status(500).send(error)
     }
-
-
-
-
-
-
-
-
 }
