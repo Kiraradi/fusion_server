@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import UserService, { getOneByEmail, update } from '../../database/repositories/userRepository';
+import UserService from '../../database/repositories/userRepository';
 import { hashingPassword } from "../../services/hashPassword";
 
 interface IRequestBody {
@@ -16,7 +16,7 @@ export const editPasswordController = async (req: Request<{}, {}, IRequestBody>,
     const { oldPassword, newPassword } = req.body;
 
 
-    const user = await getOneByEmail(req.user.email, { withPassword: true });
+    const user = await UserService.getOneByEmail(req.user.email, { withPassword: true });
 
     const hashOldPassword = hashingPassword(oldPassword);
 
@@ -33,7 +33,7 @@ export const editPasswordController = async (req: Request<{}, {}, IRequestBody>,
     const hashNewPassword = hashingPassword(newPassword);
     const userWithNewPassword = { ...user, password: hashNewPassword };
 
-    await update(userWithNewPassword.id, userWithNewPassword);
+    await UserService.update(userWithNewPassword.id, userWithNewPassword);
 
     res.status(200).send('The password has been successfully changed');
 

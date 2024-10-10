@@ -51,6 +51,10 @@ export const update = (id: number, data: DeepPartial<User>) => {
     return userRepository.update(id, data);
 }
 
+export const deleteUser = (id: number) => {
+    return userRepository.delete(id)
+}
+
 export default {
     getAll,
     getOneById,
@@ -58,4 +62,5 @@ export default {
     getOneByEmailWithPassword,
     save,
     update,
+    deleteUser
 }
