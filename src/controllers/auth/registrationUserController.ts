@@ -1,4 +1,4 @@
-import { getOneByEmail, save } from "../../database/repositories/userRepository";
+import UserService from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
 import { Response, Request} from "express";
 import { hashingPassword } from "../../services/hashPassword";
@@ -7,7 +7,7 @@ import { User } from "../../database/entitys/User";
 export const registrationUserController = async (req: Request<{}, {}, User>, res: Response) => {
     try {
         const userData = req.body;
-        const isEmainInDatabase = await getOneByEmail(userData.email);
+        const isEmainInDatabase = await UserService.getOneByEmail(userData.email);
     
         if (isEmainInDatabase) {
             res.status(404).send('email is busy');
@@ -21,7 +21,7 @@ export const registrationUserController = async (req: Request<{}, {}, User>, res
             password: hashedPassword
         }
     
-        const user = await save(userWithHash);
+        const user = await UserService.save(userWithHash);
     
     
         if (!user.id) {

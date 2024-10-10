@@ -1,5 +1,5 @@
 import { Response, Request} from "express"
-import { getOneById } from "../../database/repositories/userRepository"
+import UserService from "../../database/repositories/userRepository"
 
 interface IQuery {
     id: string
@@ -13,7 +13,7 @@ export const getUserController = async (req: Request<any, unknown, {},IQuery>, r
             res.status(404).send('id not find');
         }
     
-        const user = await getOneById(userId);
+        const user = await UserService.getOneById(userId);
     
         if(!user) {
             res.status(404).send('user not find');

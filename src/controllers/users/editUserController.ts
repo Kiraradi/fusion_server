@@ -1,6 +1,5 @@
 import { Response, Request } from "express";
 import UserService from '../../database/repositories/userRepository';
-import { getOneByEmail } from "../../database/repositories/userRepository";
 import { DeepPartial } from "typeorm";
 import { User } from "../../database/entitys/User";
 
@@ -31,7 +30,7 @@ export const editUserController = async (req: Request<{}, {}, IRequestBody>, res
 
     
         if (email) {            
-            const isEmailBusy = await getOneByEmail(email);
+            const isEmailBusy = await UserService.getOneByEmail(email);
         
             if (isEmailBusy) {
                 res.status(400).send('email is busy');

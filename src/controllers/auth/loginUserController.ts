@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { hashingPassword } from "../../services/hashPassword";
-import { getOneByEmailWithPassword } from "../../database/repositories/userRepository";
+import UserService from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
 
 interface IReqData {
@@ -12,7 +12,7 @@ export const loginUserController = async (req: Request<{}, {}, IReqData>, res: R
     try {
         const reqData = req.body;
 
-        const foundUser = await getOneByEmailWithPassword(reqData.email);
+        const foundUser = await UserService.getOneByEmail(reqData.email, {withPassword: true});
 
         if (!foundUser) {
             res.status(404).send('User not found');
