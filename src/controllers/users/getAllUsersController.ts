@@ -1,10 +1,10 @@
 import { Response, Request } from "express";
-import { getAllUsers } from "../../database/repositories/userRepository";
+import { getAll } from "../../database/repositories/userRepository";
 
 
 export const getAllUsersController = async (req: Request, res: Response) => {
     try {
-        const allUsers = await getAllUsers();
+        const allUsers = await getAll();
 
         res.send(allUsers);
         

@@ -12,6 +12,8 @@ export const loginUserController = async (req: Request<{}, {}, IReqData>, res: R
     try {
         const reqData = req.body;
 
+        console.log(reqData)
+
         const foundUser = await getOneByEmailWithPassword(reqData.email);
 
         if (!foundUser) {

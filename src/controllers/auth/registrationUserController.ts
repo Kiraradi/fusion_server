@@ -1,10 +1,10 @@
-import { getOneByEmail, saveUser } from "../../database/repositories/userRepository";
+import { getOneByEmail, save } from "../../database/repositories/userRepository";
 import { generateAccessToken } from "../../services/accessTokenService";
 import { Response, Request} from "express";
 import { hashingPassword } from "../../services/hashPassword";
-import { IUser } from "../../types/types";
+import { User } from "../../database/entitys/User";
 
-export const registrationUserController = async (req: Request<{}, {}, IUser>, res: Response) => {
+export const registrationUserController = async (req: Request<{}, {}, User>, res: Response) => {
     try {
         const userData = req.body;
         const isEmainInDatabase = await getOneByEmail(userData.email);
@@ -21,7 +21,7 @@ export const registrationUserController = async (req: Request<{}, {}, IUser>, re
             password: hashedPassword
         }
     
-        const user = await saveUser(userWithHash);
+        const user = await save(userWithHash);
     
     
         if (!user.id) {

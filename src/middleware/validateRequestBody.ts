@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import { Schema } from "yup";
+import { Schema, ValidationError } from "yup";
 
 export interface IValidateError {
     path: string
@@ -9,12 +9,12 @@ export const validateRequestBody = (schema: Schema) => async(req: Request, res: 
     try {
         await schema.validate({
             ...req.body
-        })
+        }, {abortEarly: false, strict: false, stripUnknown: false})
         
         next();
 
     } catch (err) {
-        const error = err as IValidateError;
-        res.status(400).send(`invalid ${error.path}`);
+        const error = err as ValidationError;
+        res.status(400).send(`${error.errors}`);
     }
 }

@@ -1,11 +1,10 @@
 import { DeepPartial, FindOneOptions } from "typeorm";
-import { IUserData } from "../../types/types";
 import { AppDataSource } from "../dataSource";
 import { User } from "../entitys/User";
 
 export const userRepository = AppDataSource.getRepository(User);
 
-export const getAllUsers = () => {
+export const getAll = () => {
     return userRepository.find();
 }
 
@@ -41,19 +40,10 @@ export const getOneByEmailWithPassword = (email: string) => {
     return userRepository.findOne({
         where: { email },
         select: ['id', 'fullName','email','password', 'dayOfBirthday']
-        // select: {
-        //     id: true,
-        //     fullName: true,
-        //     email: true,
-        //     password: true,
-        //     dayOfBirthday: true,
-        //     awf: true,
-        // }
-
     });
 }
 
-export const saveUser = (user: IUserData) => {
+export const save = (user: User) => {
     return userRepository.save(user);
 }
 
@@ -62,14 +52,10 @@ export const update = (id: number, data: DeepPartial<User>) => {
 }
 
 export default {
-    getAllUsers,
+    getAll,
     getOneById,
     getOneByEmail,
     getOneByEmailWithPassword,
-    saveUser,
+    save,
     update,
-}
-
-export class UserService {
-    static getAll = getAllUsers;
 }

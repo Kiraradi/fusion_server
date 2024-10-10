@@ -1,6 +1,5 @@
-import { Response, Request, RequestHandler } from "express";
+import { Response, Request } from "express";
 import UserService from '../../database/repositories/userRepository';
-import { USER_OBJECT_KEYS } from "../../enums";
 import { getOneByEmail } from "../../database/repositories/userRepository";
 import { DeepPartial } from "typeorm";
 import { User } from "../../database/entitys/User";
@@ -30,20 +29,25 @@ export const editUserController = async (req: Request<{}, {}, IRequestBody>, res
 
         const dataToUpdate: DeepPartial<User> = rest;
 
-        if (email) {
-            // check something
-            const isEmailAvailable = true;
-            if (isEmailAvailable) {
-                dataToUpdate.email = email; 
+    
+        if (email) {            
+            const isEmailBusy = await getOneByEmail(email);
+        
+            if (isEmailBusy) {
+                res.status(400).send('email is busy');
+                return;                 
             }
         }
+
+        dataToUpdate.email = email;
         
-        await UserService.update(user.id, req.body);
+        await UserService.update(user.id, dataToUpdate);
 
         const updatedUser = await UserService.getOneById(user.id);
 
-        res.status(200).send({ user: updatedUser })
-    } catch (error) {
+        res.status(200).send({ user: updatedUser });
 
+    } catch (error) {
+        res.status(500).send('Error')
     }
 }
