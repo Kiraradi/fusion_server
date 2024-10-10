@@ -36,13 +36,6 @@ export const getOneByEmail = async (email: string, options?: {
     return user;
 }
 
-export const getOneByEmailWithPassword = (email: string) => {
-    return userRepository.findOne({
-        where: { email },
-        select: ['id', 'fullName','email','password', 'dayOfBirthday']
-    });
-}
-
 export const save = (user: User) => {
     return userRepository.save(user);
 }
@@ -59,7 +52,6 @@ export default {
     getAll,
     getOneById,
     getOneByEmail,
-    getOneByEmailWithPassword,
     save,
     update,
     deleteUser

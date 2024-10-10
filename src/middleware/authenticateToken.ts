@@ -1,5 +1,5 @@
 import { Response, NextFunction, Request } from "express";
-import { getOneById } from "../database/repositories/userRepository";
+import UserService from "../database/repositories/userRepository";
 import { verifyAccessToken } from "../services/accessTokenService";
 
 
@@ -20,10 +20,10 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
             return;
         }
 
-        const user = await getOneById(id);
+        const user = await UserService.getOneById(id);
 
         if(!user) {
-            res.status(404).send('User not finded');
+            res.status(404).send('User not find');
             return;
         }
 

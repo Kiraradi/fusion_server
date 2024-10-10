@@ -8,13 +8,8 @@ interface IRequestBody {
 }
 export const editPasswordController = async (req: Request<{}, {}, IRequestBody>, res: Response) => {
   try {
-    if (!req.user) {
-      res.status(404).send('user not find');
-      return
-    }
 
     const { oldPassword, newPassword } = req.body;
-
 
     const user = await UserService.getOneByEmail(req.user.email, { withPassword: true });
 

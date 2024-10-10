@@ -17,11 +17,6 @@ export const editUserController = async (req: Request<{}, {}, IRequestBody>, res
             res.status(404).send('no new parameters found');
         }
         
-        if(!req.user) {
-            res.status(404).send('User not finded');
-            return;
-        }
-        
         const user = { ...req.user };
 
         const { email, ...rest } = req.body;

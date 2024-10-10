@@ -9,7 +9,7 @@ export const validateRequestBody = (schema: Schema) => async(req: Request, res: 
     try {
         await schema.validate({
             ...req.body
-        }, {abortEarly: false, strict: false, stripUnknown: false})
+        }, {abortEarly: false, strict: false, stripUnknown: false});
         
         next();
 

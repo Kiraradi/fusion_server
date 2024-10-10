@@ -23,7 +23,7 @@ export const loginUserController = async (req: Request<{}, {}, IReqData>, res: R
 
         if (hashedPassord !== foundUser.password) {
             res.status(400).send('incorrect password');
-            return
+            return;
         }
 
 
@@ -39,6 +39,6 @@ export const loginUserController = async (req: Request<{}, {}, IReqData>, res: R
 
 
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send(error);
     }
 }

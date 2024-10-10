@@ -23,12 +23,6 @@ export const registrationUserController = async (req: Request<{}, {}, User>, res
     
         const user = await UserService.save(userWithHash);
     
-    
-        if (!user.id) {
-            res.sendStatus(500);
-            return;
-        }
-    
         res.send({
             token: generateAccessToken(user.id),
             user: {
