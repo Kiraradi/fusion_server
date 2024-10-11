@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import UserService from "../../database/repositories/userRepository";
-import { hashingPassword } from "../../services/hashPassword";
+import { hashingPassword } from "../../services/hashingPassword";
 
 interface IRequestBody {
   oldPassword: string;

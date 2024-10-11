@@ -1,6 +1,6 @@
 import { Response, NextFunction, Request } from "express";
 import UserService from "../database/repositories/userRepository";
-import { verifyAccessToken } from "../services/accessTokenService";
+import tokenService from "../services/tokenService";
 
 export const authenticateToken = async (
   req: Request,
@@ -16,7 +16,7 @@ export const authenticateToken = async (
       return;
     }
 
-    const id = verifyAccessToken(token);
+    const id = tokenService.verifyAccessToken(token);
 
     if (!id) {
       res.status(401).send("Token verification error");

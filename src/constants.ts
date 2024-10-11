@@ -9,6 +9,7 @@ export const REGEX_FOR_YUP = {
 
 export const PROCESS_ENV = {
   TOKEN_SECRET: String(process.env.TOKEN_SECRET),
+  REFRESH_TOKEN_SECRET: String(process.env.REFRESH_TOKEN_SECRET),
   SERVER_PORT: Number(process.env.SERVER_PORT),
   SERVER_DATADASE_PORT: Number(process.env.SERVER_DATADASE_PORT),
   SERVER_HOST: String(process.env.SERVER_HOST),

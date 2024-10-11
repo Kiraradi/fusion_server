@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
-import { hashingPassword } from "../../services/hashPassword";
+import { hashingPassword } from "../../services/hashingPassword";
 import UserService from "../../database/repositories/userRepository";
-import { generateAccessToken } from "../../services/accessTokenService";
+import tokenService from "../../services/tokenService";
 
 interface IReqData {
   email: string;
@@ -32,7 +32,10 @@ export const loginUserController = async (
     }
 
     res.status(200).send({
-      token: generateAccessToken(foundUser.id),
+      tokens: {
+        accessToken: tokenService.generateAccessToken(foundUser.id),
+        refreshToken: tokenService.generateRefreshToken(foundUser.id),
+      },
       user: {
         id: foundUser.id,
         fullName: foundUser.fullName,

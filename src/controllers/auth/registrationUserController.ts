@@ -1,7 +1,7 @@
 import UserService from "../../database/repositories/userRepository";
-import { generateAccessToken } from "../../services/accessTokenService";
+import tokenService from "../../services/tokenService";
 import { Response, Request } from "express";
-import { hashingPassword } from "../../services/hashPassword";
+import { hashingPassword } from "../../services/hashingPassword";
 import { User } from "../../database/entitys/User";
 
 export const registrationUserController = async (
@@ -27,7 +27,10 @@ export const registrationUserController = async (
     const user = await UserService.save(userWithHash);
 
     res.send({
-      token: generateAccessToken(user.id),
+      tokens: {
+        accessToken: tokenService.generateAccessToken(user.id),
+        refreshToken: tokenService.generateRefreshToken(user.id),
+      },
       user: {
         id: user.id,
         fullName: user.fullName,
