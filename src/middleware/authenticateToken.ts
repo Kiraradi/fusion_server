@@ -2,39 +2,32 @@ import { NextFunction, Request } from "express";
 import UserService from "../database/repositories/userRepository";
 import tokenService from "../services/tokenService";
 import { ResponseWithBody } from "../types/types";
+import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 
-export const authenticateToken = async (
-  req: Request,
-  res: ResponseWithBody<unknown>,
-  next: NextFunction,
-) => {
-  try {
+export const authenticateToken = asyncHandler(
+  async (req: Request, res: ResponseWithBody<unknown>, next: NextFunction) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-      res.sendStatus(401);
-      return;
+      throw createError(401, "token not find");
     }
 
     const id = tokenService.verifyAccessToken(token);
 
     if (!id) {
-      res.status(401).send({ message: "Token verification error" });
-      return;
+      throw createError(401, "Token verification error");
     }
 
     const user = await UserService.getOneById(id);
 
     if (!user) {
-      res.status(404).send({ message: "User not find" });
-      return;
+      throw createError(404, "User not find");
     }
 
     req.user = user;
 
     next();
-  } catch (error) {
-    res.status(500).send({ message: `${error}` });
-  }
-};
+  },
+);

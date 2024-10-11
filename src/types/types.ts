@@ -15,3 +15,8 @@ export type TokensType = {
   accessToken: string;
   refreshToken: string;
 };
+
+export interface ICustomException extends Error {
+  status: number;
+  message: string;
+}

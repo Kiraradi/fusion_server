@@ -8,23 +8,24 @@ import {
   UserWithoutPassordType,
   ResponseWithBody,
 } from "../../types/types";
+import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 
 interface IPayload {
   tokens: TokensType;
   user: UserWithoutPassordType;
 }
 
-export const registrationUserController = async (
-  req: Request<unknown, unknown, User>,
-  res: ResponseWithBody<IPayload>,
-) => {
-  try {
+export const registrationUserController = asyncHandler(
+  async (
+    req: Request<unknown, unknown, User>,
+    res: ResponseWithBody<IPayload>,
+  ) => {
     const userData = req.body;
     const isEmainInDatabase = await UserService.getOneByEmail(userData.email);
 
     if (isEmainInDatabase) {
-      res.status(404).send({ message: "email is busy" });
-      return;
+      throw createError(404, "email is busy");
     }
 
     const hashedPassword = hashingPassword(userData.password);
@@ -51,7 +52,5 @@ export const registrationUserController = async (
       },
       message: "Success",
     });
-  } catch (error) {
-    res.status(500).send({ message: `${error}` });
-  }
-};
+  },
+);

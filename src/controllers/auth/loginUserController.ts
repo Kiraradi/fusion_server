@@ -2,6 +2,8 @@ import { Request } from "express";
 import { hashingPassword } from "../../services/hashingPassword";
 import UserService from "../../database/repositories/userRepository";
 import tokenService from "../../services/tokenService";
+import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 import {
   ResponseWithBody,
   TokensType,
@@ -18,11 +20,11 @@ interface IPayload {
   user: UserWithoutPassordType;
 }
 
-export const loginUserController = async (
-  req: Request<unknown, unknown, IReqData>,
-  res: ResponseWithBody<IPayload>,
-) => {
-  try {
+export const loginUserController = asyncHandler(
+  async (
+    req: Request<unknown, unknown, IReqData>,
+    res: ResponseWithBody<IPayload>,
+  ) => {
     const reqData = req.body;
 
     const foundUser = await UserService.getOneByEmail(reqData.email, {
@@ -30,15 +32,13 @@ export const loginUserController = async (
     });
 
     if (!foundUser) {
-      res.status(404).send({ message: "User not found" });
-      return;
+      throw createError(404, "User not found");
     }
 
     const hashedPassord = hashingPassword(reqData.password);
 
     if (hashedPassord !== foundUser.password) {
-      res.status(400).send({ message: "incorrect password" });
-      return;
+      throw createError(400, "incorrect password");
     }
 
     res.status(200).send({
@@ -56,7 +56,5 @@ export const loginUserController = async (
       },
       message: "Success",
     });
-  } catch (error) {
-    res.status(500).send({ message: `${error}` });
-  }
-};
+  },
+);

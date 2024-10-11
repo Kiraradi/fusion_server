@@ -2,30 +2,30 @@ import { Request } from "express";
 import tokenService from "../../services/tokenService";
 import UserService from "../../database/repositories/userRepository";
 import { ResponseWithBody, TokensType } from "../../types/types";
+import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 
 interface IRequestBoby {
   refreshToken: string;
 }
 
-export const refreshAccessTokenController = async (
-  req: Request<unknown, unknown, IRequestBoby>,
-  res: ResponseWithBody<TokensType>,
-) => {
-  try {
+export const refreshAccessTokenController = asyncHandler(
+  async (
+    req: Request<unknown, unknown, IRequestBoby>,
+    res: ResponseWithBody<TokensType>,
+  ) => {
     const refreshToken = req.body.refreshToken;
 
     const id = tokenService.verifyRefreshToken(refreshToken);
 
     if (!id) {
-      res.status(400).send({ message: "invalid token" });
-      return;
+      throw createError(400, "invalid token");
     }
 
     const user = await UserService.getOneById(id);
 
     if (!user) {
-      res.status(404).send({ message: "User not find" });
-      return;
+      throw createError(404, "User not find");
     }
 
     const newAccessToken = tokenService.generateAccessToken(user.id);
@@ -38,7 +38,5 @@ export const refreshAccessTokenController = async (
       },
       message: "",
     });
-  } catch (error) {
-    res.status(500).send({ message: `${error}` });
-  }
-};
+  },
+);

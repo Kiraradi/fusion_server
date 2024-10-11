@@ -3,6 +3,8 @@ import UserService from "../../database/repositories/userRepository";
 import { DeepPartial } from "typeorm";
 import { User } from "../../database/entitys/User";
 import { ResponseWithBody } from "../../types/types";
+import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 
 interface IRequestBody {
   fullName?: string;
@@ -14,11 +16,11 @@ interface IPayload {
   user: User | null;
 }
 
-export const editUserController = async (
-  req: Request<unknown, unknown, IRequestBody>,
-  res: ResponseWithBody<IPayload>,
-) => {
-  try {
+export const editUserController = asyncHandler(
+  async (
+    req: Request<unknown, unknown, IRequestBody>,
+    res: ResponseWithBody<IPayload>,
+  ) => {
     const newDataOfUser = req.body;
 
     if (Object.keys(newDataOfUser).length === 0) {
@@ -35,8 +37,7 @@ export const editUserController = async (
       const isEmailBusy = await UserService.getOneByEmail(email);
 
       if (isEmailBusy) {
-        res.status(400).send({ message: "email is busy" });
-        return;
+        throw createError(400, "email is busy");
       }
     }
 
@@ -52,7 +53,5 @@ export const editUserController = async (
       },
       message: "Success",
     });
-  } catch (error) {
-    res.status(500).send({ message: `${error}` });
-  }
-};
+  },
+);

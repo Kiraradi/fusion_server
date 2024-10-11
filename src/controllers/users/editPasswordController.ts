@@ -2,16 +2,18 @@ import { Request } from "express";
 import UserService from "../../database/repositories/userRepository";
 import { hashingPassword } from "../../services/hashingPassword";
 import { ResponseWithBody } from "../../types/types";
+import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 
 interface IRequestBody {
   oldPassword: string;
   newPassword: string;
 }
-export const editPasswordController = async (
-  req: Request<unknown, unknown, IRequestBody>,
-  res: ResponseWithBody<unknown>,
-) => {
-  try {
+export const editPasswordController = asyncHandler(
+  async (
+    req: Request<unknown, unknown, IRequestBody>,
+    res: ResponseWithBody<unknown>,
+  ) => {
     const { oldPassword, newPassword } = req.body;
 
     const user = await UserService.getOneByEmail(req.user.email, {
@@ -21,15 +23,11 @@ export const editPasswordController = async (
     const hashOldPassword = hashingPassword(oldPassword);
 
     if (hashOldPassword !== user?.password) {
-      res.status(400).send({ message: "invalid password" });
-      return;
+      throw createError(400, "invalid password");
     }
 
     if (oldPassword === newPassword) {
-      res
-        .status(400)
-        .send({ message: "The old and new passwords must not match" });
-      return;
+      throw createError(400, "The old and new passwords must not match");
     }
 
     const hashNewPassword = hashingPassword(newPassword);
@@ -40,7 +38,5 @@ export const editPasswordController = async (
     res
       .status(200)
       .send({ message: "The password has been successfully changed" });
-  } catch (error) {
-    res.status(500).send({ message: `${error}` });
-  }
-};
+  },
+);
