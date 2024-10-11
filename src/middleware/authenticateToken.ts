@@ -1,10 +1,11 @@
-import { Response, NextFunction, Request } from "express";
+import { NextFunction, Request } from "express";
 import UserService from "../database/repositories/userRepository";
 import tokenService from "../services/tokenService";
+import { ResponseWithBody } from "../types/types";
 
 export const authenticateToken = async (
   req: Request,
-  res: Response,
+  res: ResponseWithBody<unknown>,
   next: NextFunction,
 ) => {
   try {
@@ -19,14 +20,14 @@ export const authenticateToken = async (
     const id = tokenService.verifyAccessToken(token);
 
     if (!id) {
-      res.status(401).send("Token verification error");
+      res.status(401).send({ message: "Token verification error" });
       return;
     }
 
     const user = await UserService.getOneById(id);
 
     if (!user) {
-      res.status(404).send("User not find");
+      res.status(404).send({ message: "User not find" });
       return;
     }
 
@@ -34,6 +35,6 @@ export const authenticateToken = async (
 
     next();
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({ message: `${error}` });
   }
 };

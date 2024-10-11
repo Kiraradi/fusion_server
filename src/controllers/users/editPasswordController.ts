@@ -1,6 +1,7 @@
-import { Response, Request } from "express";
+import { Request } from "express";
 import UserService from "../../database/repositories/userRepository";
 import { hashingPassword } from "../../services/hashingPassword";
+import { ResponseWithBody } from "../../types/types";
 
 interface IRequestBody {
   oldPassword: string;
@@ -8,7 +9,7 @@ interface IRequestBody {
 }
 export const editPasswordController = async (
   req: Request<unknown, unknown, IRequestBody>,
-  res: Response,
+  res: ResponseWithBody<unknown>,
 ) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -20,12 +21,14 @@ export const editPasswordController = async (
     const hashOldPassword = hashingPassword(oldPassword);
 
     if (hashOldPassword !== user?.password) {
-      res.status(400).send("invalid password");
+      res.status(400).send({ message: "invalid password" });
       return;
     }
 
     if (oldPassword === newPassword) {
-      res.status(400).send("The old and new passwords must not match");
+      res
+        .status(400)
+        .send({ message: "The old and new passwords must not match" });
       return;
     }
 
@@ -34,8 +37,10 @@ export const editPasswordController = async (
 
     await UserService.update(userWithNewPassword.id, userWithNewPassword);
 
-    res.status(200).send("The password has been successfully changed");
+    res
+      .status(200)
+      .send({ message: "The password has been successfully changed" });
   } catch (error) {
-    res.status(500).send(`${error}`);
+    res.status(500).send({ message: `${error}` });
   }
 };

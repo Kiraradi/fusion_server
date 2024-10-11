@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import tokenService from "../../services/tokenService";
 import UserService from "../../database/repositories/userRepository";
+import { ResponseWithBody, TokensType } from "../../types/types";
 
 interface IRequestBoby {
   refreshToken: string;
@@ -8,7 +9,7 @@ interface IRequestBoby {
 
 export const refreshAccessTokenController = async (
   req: Request<unknown, unknown, IRequestBoby>,
-  res: Response,
+  res: ResponseWithBody<TokensType>,
 ) => {
   try {
     const refreshToken = req.body.refreshToken;
@@ -16,14 +17,14 @@ export const refreshAccessTokenController = async (
     const id = tokenService.verifyRefreshToken(refreshToken);
 
     if (!id) {
-      res.status(400).send("invalid token");
+      res.status(400).send({ message: "invalid token" });
       return;
     }
 
     const user = await UserService.getOneById(id);
 
     if (!user) {
-      res.status(404).send("User not find");
+      res.status(404).send({ message: "User not find" });
       return;
     }
 
@@ -31,10 +32,13 @@ export const refreshAccessTokenController = async (
     const newRefreshToken = tokenService.generateRefreshToken(user.id);
 
     res.status(200).send({
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
+      payload: {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+      },
+      message: "",
     });
   } catch (error) {
-    res.status(500).send(`${error}`);
+    res.status(500).send({ message: `${error}` });
   }
 };

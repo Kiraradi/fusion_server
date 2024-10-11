@@ -1,12 +1,20 @@
-import { Response, Request } from "express";
+import { Request } from "express";
 import { getAll } from "../../database/repositories/userRepository";
+import { ResponseWithBody } from "../../types/types";
+import { User } from "../../database/entitys/User";
 
-export const getAllUsersController = async (req: Request, res: Response) => {
+export const getAllUsersController = async (
+  req: Request,
+  res: ResponseWithBody<User[]>,
+) => {
   try {
     const allUsers = await getAll();
 
-    res.send(allUsers);
+    res.status(200).send({
+      payload: allUsers,
+      message: "Success",
+    });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({ message: `${error}` });
   }
 };
