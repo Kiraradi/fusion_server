@@ -10,4 +10,11 @@ export const editPasswordSchema = object()
       .matches(REGEX_FOR_YUP.password)
       .required("Invalid  new password"),
   })
+  .test(
+    "check password test",
+    "the new password must not match the current one",
+    ({ password, newPassword }) => {
+      return password !== newPassword;
+    },
+  )
   .noUnknown(true, "Unknown fields were passed in the request");

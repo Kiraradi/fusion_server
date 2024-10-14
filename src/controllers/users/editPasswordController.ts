@@ -6,7 +6,7 @@ import { CustomError } from "../../services/customError";
 
 interface IRequestBody {
   password: string;
-  newPassword?: string;
+  newPassword: string;
 }
 export const editPasswordController = async (
   req: Request<unknown, unknown, IRequestBody>,
@@ -14,12 +14,19 @@ export const editPasswordController = async (
   next: NextFunction,
 ) => {
   try {
-    const { newPassword } = req.body;
+    const { password, newPassword } = req.body;
 
-    const user = req.user;
+    const user = await UserService.getOneByEmail(req.user.email, {
+      withPassword: true,
+    });
 
-    if (!newPassword) {
-      throw new CustomError(404, "new passord not find");
+    if (!user) {
+      throw new CustomError(404, "user not find");
+    }
+    const hashOldPassword = hashingPassword(password);
+
+    if (user.password !== hashOldPassword) {
+      throw new CustomError(400, "password invalid");
     }
 
     const hashNewPassword = hashingPassword(newPassword);
