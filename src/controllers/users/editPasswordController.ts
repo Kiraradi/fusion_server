@@ -12,7 +12,7 @@ interface IRequestBody {
 export const editPasswordController = asyncHandler(
   async (
     req: Request<unknown, unknown, IRequestBody>,
-    res: ResponseWithBody<unknown>,
+    res: ResponseWithBody<null>,
   ) => {
     const { newPassword } = req.body;
 
@@ -27,8 +27,9 @@ export const editPasswordController = asyncHandler(
 
     await UserService.update(userWithNewPassword.id, userWithNewPassword);
 
-    res
-      .status(200)
-      .send({ message: "The password has been successfully changed" });
+    res.status(200).send({
+      payload: null,
+      message: "The password has been successfully changed",
+    });
   },
 );

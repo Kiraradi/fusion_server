@@ -6,7 +6,7 @@ export type UserFromRequest = Omit<User, "password"> & {
 };
 
 export type ResponseBodyType<T> = {
-  payload?: T;
+  payload: T;
   message: string;
   meta?: unknown;
 };

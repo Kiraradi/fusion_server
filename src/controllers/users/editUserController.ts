@@ -24,7 +24,7 @@ export const editUserController = asyncHandler(
     const newDataOfUser = req.body;
 
     if (Object.keys(newDataOfUser).length === 0) {
-      res.status(404).send({ message: "no new parameters found" });
+      throw createError(404, "no new parameters found");
     }
 
     const user = { ...req.user };
