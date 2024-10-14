@@ -1,10 +1,9 @@
-import { Request } from "express";
+import { NextFunction, Request } from "express";
 import UserService from "../../database/repositories/userRepository";
 import { DeepPartial } from "typeorm";
 import { User } from "../../database/entitys/User";
 import { ResponseWithBody } from "../../types/types";
-import asyncHandler from "express-async-handler";
-import createError from "http-errors";
+import { CustomError } from "../../services/customError";
 
 interface IRequestBody {
   fullName?: string;
@@ -16,15 +15,16 @@ interface IPayload {
   user: User | null;
 }
 
-export const editUserController = asyncHandler(
-  async (
-    req: Request<unknown, unknown, IRequestBody>,
-    res: ResponseWithBody<IPayload>,
-  ) => {
+export const editUserController = async (
+  req: Request<unknown, unknown, IRequestBody>,
+  res: ResponseWithBody<IPayload>,
+  next: NextFunction,
+) => {
+  try {
     const newDataOfUser = req.body;
 
     if (Object.keys(newDataOfUser).length === 0) {
-      throw createError(404, "no new parameters found");
+      throw new CustomError(404, "no new parameters found");
     }
 
     const user = { ...req.user };
@@ -37,7 +37,7 @@ export const editUserController = asyncHandler(
       const isEmailBusy = await UserService.getOneByEmail(email);
 
       if (isEmailBusy) {
-        throw createError(400, "email is busy");
+        throw new CustomError(400, "email is busy");
       }
     }
 
@@ -53,5 +53,7 @@ export const editUserController = asyncHandler(
       },
       message: "Success",
     });
-  },
-);
+  } catch (error) {
+    next(error);
+  }
+};

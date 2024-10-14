@@ -1,6 +1,6 @@
 import UserService from "../../database/repositories/userRepository";
 import tokenService from "../../services/tokenService";
-import { Request } from "express";
+import { NextFunction, Request } from "express";
 import { hashingPassword } from "../../services/hashingPassword";
 import { User } from "../../database/entitys/User";
 import {
@@ -8,24 +8,24 @@ import {
   UserFromRequest,
   ResponseWithBody,
 } from "../../types/types";
-import asyncHandler from "express-async-handler";
-import createError from "http-errors";
+import { CustomError } from "../../services/customError";
 
 interface IPayload {
   tokens: TokensType;
   user: UserFromRequest;
 }
 
-export const registrationUserController = asyncHandler(
-  async (
-    req: Request<unknown, unknown, User>,
-    res: ResponseWithBody<IPayload>,
-  ) => {
+export const registrationUserController = async (
+  req: Request<unknown, unknown, User>,
+  res: ResponseWithBody<IPayload>,
+  next: NextFunction,
+) => {
+  try {
     const userData = req.body;
     const isEmainInDatabase = await UserService.getOneByEmail(userData.email);
 
     if (isEmainInDatabase) {
-      throw createError(404, "email is busy");
+      throw new CustomError(404, "email is busy");
     }
 
     const hashedPassword = hashingPassword(userData.password);
@@ -52,5 +52,7 @@ export const registrationUserController = asyncHandler(
       },
       message: "Success",
     });
-  },
-);
+  } catch (error) {
+    next(error);
+  }
+};

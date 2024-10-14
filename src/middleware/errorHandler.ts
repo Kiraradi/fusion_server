@@ -1,5 +1,6 @@
 import { NextFunction, Request } from "express";
 import { ICustomException, ResponseWithBody } from "../types/types";
+import { CustomError } from "../services/customError";
 
 export const errorHandler = (
   error: ICustomException,
@@ -7,9 +8,11 @@ export const errorHandler = (
   res: ResponseWithBody<null>,
   next: NextFunction,
 ) => {
-  res.status(error.status || 500).send({
-    payload: null,
-    message: error.message,
-  });
+  if (error instanceof CustomError) {
+    res.status(error.code).send({ payload: null, message: error.message });
+  } else {
+    res.status(500).send({ payload: null, message: "internal server error" });
+  }
+
   next();
 };

@@ -1,9 +1,5 @@
-import { Request } from "express";
-import { hashingPassword } from "../../services/hashingPassword";
-import UserService from "../../database/repositories/userRepository";
+import { NextFunction, Request } from "express";
 import tokenService from "../../services/tokenService";
-import asyncHandler from "express-async-handler";
-import createError from "http-errors";
 import {
   ResponseWithBody,
   TokensType,
@@ -20,11 +16,12 @@ interface IPayload {
   user: UserFromRequest;
 }
 
-export const loginUserController = asyncHandler(
-  async (
-    req: Request<unknown, unknown, IReqData>,
-    res: ResponseWithBody<IPayload>,
-  ) => {
+export const loginUserController = async (
+  req: Request<unknown, unknown, IReqData>,
+  res: ResponseWithBody<IPayload>,
+  next: NextFunction,
+) => {
+  try {
     const foundUser = req.user;
 
     res.status(200).send({
@@ -42,5 +39,7 @@ export const loginUserController = asyncHandler(
       },
       message: "Success",
     });
-  },
-);
+  } catch (error) {
+    next(error);
+  }
+};

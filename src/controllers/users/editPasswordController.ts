@@ -1,25 +1,25 @@
-import { Request } from "express";
+import { NextFunction, Request } from "express";
 import UserService from "../../database/repositories/userRepository";
 import { hashingPassword } from "../../services/hashingPassword";
 import { ResponseWithBody } from "../../types/types";
-import asyncHandler from "express-async-handler";
-import createError from "http-errors";
+import { CustomError } from "../../services/customError";
 
 interface IRequestBody {
   password: string;
   newPassword?: string;
 }
-export const editPasswordController = asyncHandler(
-  async (
-    req: Request<unknown, unknown, IRequestBody>,
-    res: ResponseWithBody<null>,
-  ) => {
+export const editPasswordController = async (
+  req: Request<unknown, unknown, IRequestBody>,
+  res: ResponseWithBody<null>,
+  next: NextFunction,
+) => {
+  try {
     const { newPassword } = req.body;
 
     const user = req.user;
 
     if (!newPassword) {
-      throw createError(404, "new passord not find");
+      throw new CustomError(404, "new passord not find");
     }
 
     const hashNewPassword = hashingPassword(newPassword);
@@ -31,5 +31,7 @@ export const editPasswordController = asyncHandler(
       payload: null,
       message: "The password has been successfully changed",
     });
-  },
-);
+  } catch (error) {
+    next(error);
+  }
+};
