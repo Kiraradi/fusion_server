@@ -7,17 +7,17 @@ import createError from "http-errors";
 import {
   ResponseWithBody,
   TokensType,
-  UserWithoutPassordType,
+  UserFromRequest,
 } from "../../types/types";
 
 interface IReqData {
-  email: string;
+  email?: string;
   password: string;
 }
 
 interface IPayload {
   tokens: TokensType;
-  user: UserWithoutPassordType;
+  user: UserFromRequest;
 }
 
 export const loginUserController = asyncHandler(
@@ -25,21 +25,7 @@ export const loginUserController = asyncHandler(
     req: Request<unknown, unknown, IReqData>,
     res: ResponseWithBody<IPayload>,
   ) => {
-    const reqData = req.body;
-
-    const foundUser = await UserService.getOneByEmail(reqData.email, {
-      withPassword: true,
-    });
-
-    if (!foundUser) {
-      throw createError(404, "User not found");
-    }
-
-    const hashedPassord = hashingPassword(reqData.password);
-
-    if (hashedPassord !== foundUser.password) {
-      throw createError(400, "incorrect password");
-    }
+    const foundUser = req.user;
 
     res.status(200).send({
       payload: {

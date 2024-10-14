@@ -8,6 +8,7 @@ import { editUserSchame } from "../schemas/editSchema";
 import { editPasswordSchema } from "../schemas/editPasswordSchema";
 import { editPasswordController } from "../controllers/users/editPasswordController";
 import { deleteUserController } from "../controllers/users/deleteUserController";
+import { checkPassword } from "../middleware/checkPassword";
 
 const userRouter = Router();
 
@@ -23,6 +24,7 @@ userRouter.put(
   "/editPassword",
   validateRequestBody(editPasswordSchema),
   authenticateToken,
+  checkPassword,
   editPasswordController,
 );
 userRouter.delete("/delete", authenticateToken, deleteUserController);

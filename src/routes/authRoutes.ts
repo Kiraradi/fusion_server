@@ -6,12 +6,14 @@ import { registrationSchame } from "../schemas/registrationSchame";
 import { registrationUserController } from "../controllers/auth/registrationUserController";
 import { refreshAccessTokenSchema } from "../schemas/refreshAccessTokenSchema";
 import { refreshAccessTokenController } from "../controllers/auth/refreshAccessTokenController";
+import { checkPassword } from "../middleware/checkPassword";
 
 const authRouter = Router();
 
 authRouter.post(
   "/login",
   validateRequestBody(loginSchame),
+  checkPassword,
   loginUserController,
 );
 authRouter.post(

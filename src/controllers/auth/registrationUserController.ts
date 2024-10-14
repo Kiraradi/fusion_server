@@ -5,7 +5,7 @@ import { hashingPassword } from "../../services/hashingPassword";
 import { User } from "../../database/entitys/User";
 import {
   TokensType,
-  UserWithoutPassordType,
+  UserFromRequest,
   ResponseWithBody,
 } from "../../types/types";
 import asyncHandler from "express-async-handler";
@@ -13,7 +13,7 @@ import createError from "http-errors";
 
 interface IPayload {
   tokens: TokensType;
-  user: UserWithoutPassordType;
+  user: UserFromRequest;
 }
 
 export const registrationUserController = asyncHandler(

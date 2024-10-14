@@ -6,28 +6,20 @@ import asyncHandler from "express-async-handler";
 import createError from "http-errors";
 
 interface IRequestBody {
-  oldPassword: string;
-  newPassword: string;
+  password: string;
+  newPassword?: string;
 }
 export const editPasswordController = asyncHandler(
   async (
     req: Request<unknown, unknown, IRequestBody>,
     res: ResponseWithBody<unknown>,
   ) => {
-    const { oldPassword, newPassword } = req.body;
+    const { newPassword } = req.body;
 
-    const user = await UserService.getOneByEmail(req.user.email, {
-      withPassword: true,
-    });
+    const user = req.user;
 
-    const hashOldPassword = hashingPassword(oldPassword);
-
-    if (hashOldPassword !== user?.password) {
-      throw createError(400, "invalid password");
-    }
-
-    if (oldPassword === newPassword) {
-      throw createError(400, "The old and new passwords must not match");
+    if (!newPassword) {
+      throw createError(404, "new passord not find");
     }
 
     const hashNewPassword = hashingPassword(newPassword);

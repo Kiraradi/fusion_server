@@ -1,7 +1,9 @@
 import { Response } from "express";
 import { User } from "../database/entitys/User";
 
-export type UserWithoutPassordType = Omit<User, "password">;
+export type UserFromRequest = Omit<User, "password"> & {
+  password?: string;
+};
 
 export type ResponseBodyType<T> = {
   payload?: T;

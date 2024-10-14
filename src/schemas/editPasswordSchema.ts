@@ -3,7 +3,7 @@ import { REGEX_FOR_YUP } from "../constants";
 
 export const editPasswordSchema = object()
   .shape({
-    oldPassword: string()
+    password: string()
       .matches(REGEX_FOR_YUP.password)
       .required("Invalid old password"),
     newPassword: string()
