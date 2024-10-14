@@ -10,7 +10,12 @@
     "test": "",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:up": "npm run typeorm migration:run -- -d ./src/database/dataSource.ts",
+    "migration:sync": "npm run typeorm -- -d ./src/database/dataSource.ts migration:generate ./src/database/migrations/sync",
+    "migration:down": "npm run typeorm -- -d ./src/database/dataSource.ts migration:revert",
+    "migration:show": "npm run typeorm -- migration:show -d ./src/database/dataSource.ts"
   },
   "repository": {
     "type": "git",

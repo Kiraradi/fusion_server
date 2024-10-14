@@ -8,7 +8,7 @@ export class User {
   @Column()
   fullName: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ unique: true })
   email: string;
 
   @Column({ select: false })
@@ -16,4 +16,7 @@ export class User {
 
   @Column()
   dayOfBirthday: string;
+
+  @Column({ nullable: true })
+  address: string;
 }

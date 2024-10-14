@@ -10,9 +10,9 @@ export const AppDataSource = new DataSource({
   username: PROCESS_ENV.SERVER_DATADASE_USERNAME,
   password: PROCESS_ENV.SERVER_DATADASE_PASSWORD,
   database: PROCESS_ENV.SERVER_DATABASE_NAME,
-  synchronize: true, //
+  synchronize: false,
   logging: false,
-  entities: [User], //
-  migrations: [], //
+  entities: [__dirname + "/entitys/*.ts"],
+  migrations: [__dirname + "/migrations/*.ts"],
   subscribers: [],
 });
