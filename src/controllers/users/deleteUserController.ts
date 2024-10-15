@@ -1,5 +1,5 @@
 import { Request, NextFunction } from "express";
-import UserService from "../../database/repositories/userRepository";
+import UserRepository from "../../database/repositories/userRepository";
 import { ResponseWithBody } from "../../types/types";
 
 export const deleteUserController = async (
@@ -8,7 +8,7 @@ export const deleteUserController = async (
   next: NextFunction,
 ) => {
   try {
-    await UserService.deleteUser(req.user.id);
+    await UserRepository.deleteUser(req.user.id);
 
     res.status(200).send({ payload: null, message: "user deleted" });
   } catch (error) {

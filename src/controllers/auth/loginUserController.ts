@@ -1,13 +1,11 @@
 import { NextFunction, Request } from "express";
 import tokenService from "../../services/tokenService";
-import UserService from "../../database/repositories/userRepository";
 import {
   ResponseWithBody,
   TokensType,
   UserFromRequest,
 } from "../../types/types";
-import { CustomError } from "../../services/customError";
-import { hashingPassword } from "../../services/hashingPassword";
+import UserService from "../../services/UserService";
 
 interface IReqData {
   email: string;
@@ -26,19 +24,7 @@ export const loginUserController = async (
 ) => {
   try {
     const { email, password } = req.body;
-    const user = await UserService.getOneByEmail(email, {
-      withPassword: true,
-    });
-
-    const hashPassword = hashingPassword(password);
-
-    if (!user) {
-      throw new CustomError(404, "user not find");
-    }
-
-    if (hashPassword !== user.password) {
-      throw new CustomError(400, "password invalid");
-    }
+    const user = await UserService.loginUser(email, password);
 
     res.status(200).send({
       payload: {

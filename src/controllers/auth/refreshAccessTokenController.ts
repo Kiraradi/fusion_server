@@ -1,6 +1,6 @@
 import { NextFunction, Request } from "express";
 import tokenService from "../../services/tokenService";
-import UserService from "../../database/repositories/userRepository";
+import UserRepository from "../../database/repositories/userRepository";
 import { ResponseWithBody, TokensType } from "../../types/types";
 import { CustomError } from "../../services/customError";
 
@@ -22,7 +22,7 @@ export const refreshAccessTokenController = async (
       throw new CustomError(400, "invalid token");
     }
 
-    const user = await UserService.getOneById(id);
+    const user = await UserRepository.getOneById(id);
 
     if (!user) {
       throw new CustomError(400, "User not find");

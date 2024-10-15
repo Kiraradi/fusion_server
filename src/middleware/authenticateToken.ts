@@ -1,5 +1,5 @@
 import { NextFunction, Request } from "express";
-import UserService from "../database/repositories/userRepository";
+import UserRepository from "../database/repositories/userRepository";
 import tokenService from "../services/tokenService";
 import { ResponseWithBody } from "../types/types";
 import { CustomError } from "../services/customError";
@@ -23,7 +23,7 @@ export const authenticateToken = async (
       throw new CustomError(401, "Token verification error");
     }
 
-    const user = await UserService.getOneById(id);
+    const user = await UserRepository.getOneById(id);
 
     if (!user) {
       throw new CustomError(404, "User not find");

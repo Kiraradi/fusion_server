@@ -1,14 +1,12 @@
-import UserService from "../../database/repositories/userRepository";
 import tokenService from "../../services/tokenService";
 import { NextFunction, Request } from "express";
-import { hashingPassword } from "../../services/hashingPassword";
 import { User } from "../../database/entitys/User";
 import {
   TokensType,
   UserFromRequest,
   ResponseWithBody,
 } from "../../types/types";
-import { CustomError } from "../../services/customError";
+import UserService from "../../services/UserService";
 
 interface IPayload {
   tokens: TokensType;
@@ -22,20 +20,8 @@ export const registrationUserController = async (
 ) => {
   try {
     const userData = req.body;
-    const isEmainInDatabase = await UserService.getOneByEmail(userData.email);
 
-    if (isEmainInDatabase) {
-      throw new CustomError(404, "email is busy");
-    }
-
-    const hashedPassword = hashingPassword(userData.password);
-
-    const userWithHash = {
-      ...userData,
-      password: hashedPassword,
-    };
-
-    const user = await UserService.save(userWithHash);
+    const user = await UserService.registrationUser(userData);
 
     res.send({
       payload: {

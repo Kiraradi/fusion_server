@@ -1,5 +1,5 @@
 import { NextFunction, Request } from "express";
-import { getAll } from "../../database/repositories/userRepository";
+import UserRepositiry from "../../database/repositories/userRepository";
 import { ResponseWithBody } from "../../types/types";
 import { User } from "../../database/entitys/User";
 
@@ -9,7 +9,7 @@ export const getAllUsersController = async (
   next: NextFunction,
 ) => {
   try {
-    const allUsers = await getAll();
+    const allUsers = await UserRepositiry.getAll();
 
     res.status(200).send({
       payload: allUsers,
