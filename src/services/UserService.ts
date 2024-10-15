@@ -1,8 +1,8 @@
 import UserRepository from "../database/repositories/userRepository";
 import { hashPassword } from "../utils/hashPassword";
 import { User } from "../database/entitys/User";
-import { CustomError } from "./customError";
 import { DeepPartial } from "typeorm";
+import { CustomError } from "./ErrorService";
 
 interface IEditUserData {
   fullName?: string;

@@ -1,7 +1,7 @@
 import UserRepository from "../database/repositories/userRepository";
 import { hashPassword } from "../utils/hashPassword";
 import { User } from "../database/entitys/User";
-import { CustomError } from "./customError";
+import { CustomError } from "./ErrorService";
 
 const registrationUser = async (args: User) => {
   const isEmainInDatabase = await UserRepository.getOneByEmail(args.email);

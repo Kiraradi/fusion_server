@@ -2,8 +2,7 @@ import { NextFunction, Request } from "express";
 import tokenService from "../../services/TokenService";
 import UserRepository from "../../database/repositories/userRepository";
 import { ResponseWithBody, TokensType } from "../../types/types";
-import { CustomError } from "../../services/customError";
-
+import { CustomError } from "../../services/ErrorService";
 interface IRequestBoby {
   refreshToken: string;
 }

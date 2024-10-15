@@ -2,7 +2,7 @@ import { NextFunction, Request } from "express";
 import UserRepository from "../database/repositories/userRepository";
 import tokenService from "../services/TokenService";
 import { ResponseWithBody } from "../types/types";
-import { CustomError } from "../services/customError";
+import { CustomError } from "../services/ErrorService";
 
 export const authenticateToken = async (
   req: Request,

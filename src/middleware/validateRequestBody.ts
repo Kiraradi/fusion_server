@@ -1,7 +1,7 @@
 import { NextFunction, Request } from "express";
-import { AnyObject, ObjectSchema, Schema, ValidationError } from "yup";
+import { AnyObject, ObjectSchema, ValidationError } from "yup";
 import { ResponseWithBody } from "../types/types";
-import { CustomError } from "../services/customError";
+import { CustomError } from "../services/ErrorService";
 
 export const validateRequestBody =
   (schema: ObjectSchema<AnyObject>) =>

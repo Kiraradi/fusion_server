@@ -1,6 +1,13 @@
 import { NextFunction, Request } from "express";
 import { ICustomException, ResponseWithBody } from "../types/types";
-import { CustomError } from "../services/customError";
+
+export class CustomError extends Error {
+  code: number;
+  constructor(code = 500, message = "") {
+    super(message);
+    this.code = code;
+  }
+}
 
 export const errorHandler = (
   error: ICustomException,
@@ -15,4 +22,8 @@ export const errorHandler = (
   }
 
   next();
+};
+
+export default {
+  errorHandler,
 };

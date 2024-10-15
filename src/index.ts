@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 import globalRouter from "./routes";
 import { AppDataSource } from "./database/dataSource";
-import { errorHandler } from "./middleware/errorHandler";
+import ErrorService from "./services/ErrorService";
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ const PORT = process.env.SERVER_PORT;
 
 app.use(express.json());
 app.use(globalRouter);
-app.use(errorHandler);
+app.use(ErrorService.errorHandler);
 
 app.listen(PORT, () => {
   console.log(`server listens on port ${PORT}`);

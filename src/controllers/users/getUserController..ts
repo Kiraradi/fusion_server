@@ -2,7 +2,7 @@ import { NextFunction, Request } from "express";
 import { ResponseWithBody } from "../../types/types";
 import { User } from "../../database/entitys/User";
 import UserService from "../../services/UserService";
-import { CustomError } from "../../services/customError";
+import { CustomError } from "../../services/ErrorService";
 
 interface IQuery {
   id: string;
