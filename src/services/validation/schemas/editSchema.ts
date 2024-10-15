@@ -1,8 +1,8 @@
-import { object, string } from "yup";
-import { REGEX_FOR_YUP } from "./shemasData";
+import { object } from "yup";
+import { VALIDATION_FOR_YUP } from "./shemasData";
 
 export const editUserSchame = object({
-  fullName: string().max(50),
-  email: string().email(),
-  dayOfBirthday: string().matches(REGEX_FOR_YUP.dayOfBirthday),
+  fullName: VALIDATION_FOR_YUP.fullName,
+  email: VALIDATION_FOR_YUP.email,
+  dayOfBirthday: VALIDATION_FOR_YUP.dayOfBirthday,
 });

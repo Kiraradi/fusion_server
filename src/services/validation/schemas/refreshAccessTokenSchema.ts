@@ -1,5 +1,6 @@
 import { object, string } from "yup";
+import { VALIDATION_FOR_YUP } from "./shemasData";
 
 export const refreshAccessTokenSchema = object({
-  refreshToken: string().min(100).max(200).required("invalid token"),
+  refreshToken: VALIDATION_FOR_YUP.refreshToken.required(),
 });

@@ -1,18 +1,14 @@
-import { object, string } from "yup";
-import { REGEX_FOR_YUP } from "./shemasData";
+import { object } from "yup";
+import { VALIDATION_FOR_YUP } from "./shemasData";
 
 export const editPasswordSchema = object()
   .shape({
-    password: string()
-      .matches(REGEX_FOR_YUP.password)
-      .required("Invalid old password"),
-    newPassword: string()
-      .matches(REGEX_FOR_YUP.password)
-      .required("Invalid  new password"),
+    password: VALIDATION_FOR_YUP.password.required(),
+    newPassword: VALIDATION_FOR_YUP.password.required(),
   })
   .test(
     "check password test",
-    "the new password must not match the current one",
+    "The new password must not match the current one",
     ({ password, newPassword }) => {
       return password !== newPassword;
     },
