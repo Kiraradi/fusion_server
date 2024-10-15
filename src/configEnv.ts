@@ -1,6 +1,20 @@
 import dotenv from "dotenv";
+import FS from "fs";
 
-dotenv.config();
+const defaultEnv = dotenv.parse(FS.readFileSync("defult.env"));
+
+const currentEnv = dotenv.config().parsed;
+
+for (const key in defaultEnv) {
+  if (!currentEnv) {
+    break;
+  }
+  if (!currentEnv[key]) {
+    console.log(
+      `===> WARNING: Key ${key} is missing in the .env file or equals undefined!`,
+    );
+  }
+}
 
 export const CONFIG_ENV = {
   TOKEN_SECRET: String(process.env.TOKEN_SECRET),

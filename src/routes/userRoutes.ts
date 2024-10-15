@@ -11,7 +11,7 @@ import { editPasswordSchema } from "../services/validation/schemas/editPasswordS
 
 const userRouter = Router();
 
-userRouter.get("/", getUserController);
+userRouter.get("/:id", getUserController);
 userRouter.get("/all", getAllUsersController);
 userRouter.put(
   "/edit",

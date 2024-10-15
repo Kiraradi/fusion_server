@@ -16,5 +16,4 @@ export const editPasswordSchema = object()
     ({ password, newPassword }) => {
       return password !== newPassword;
     },
-  )
-  .noUnknown(true, "Unknown fields were passed in the request");
+  );

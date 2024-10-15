@@ -6,4 +6,4 @@ export const registrationSchame = object({
   email: string().email().required(),
   password: string().matches(REGEX_FOR_YUP.password).required(),
   dayOfBirthday: string().matches(REGEX_FOR_YUP.dayOfBirthday).required(),
-}).noUnknown(true, "Unknown fields were passed in the request");
+});

@@ -6,7 +6,7 @@ import {
   UserFromRequest,
   ResponseWithBody,
 } from "../../types/types";
-import UserService from "../../services/UserService";
+import AuthService from "../../services/AuthService";
 
 interface IPayload {
   tokens: TokensType;
@@ -21,7 +21,7 @@ export const registrationUserController = async (
   try {
     const userData = req.body;
 
-    const user = await UserService.registrationUser(userData);
+    const user = await AuthService.registrationUser(userData);
 
     res.send({
       payload: {

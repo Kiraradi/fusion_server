@@ -1,18 +1,20 @@
 import { NextFunction, Request } from "express";
-import { Schema, ValidationError } from "yup";
+import { AnyObject, ObjectSchema, Schema, ValidationError } from "yup";
 import { ResponseWithBody } from "../types/types";
 import { CustomError } from "../services/customError";
 
 export const validateRequestBody =
-  (schema: Schema) =>
+  (schema: ObjectSchema<AnyObject>) =>
   async (req: Request, res: ResponseWithBody<unknown>, next: NextFunction) => {
     try {
-      await schema.validate(
-        {
-          ...req.body,
-        },
-        { abortEarly: false, strict: false, stripUnknown: false },
-      );
+      await schema
+        .noUnknown(true, "Unknown fields were passed in the request")
+        .validate(
+          {
+            ...req.body,
+          },
+          { abortEarly: false, strict: false, stripUnknown: false },
+        );
 
       next();
     } catch (err) {

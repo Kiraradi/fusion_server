@@ -14,7 +14,7 @@ export const authenticateToken = async (
     const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-      throw new CustomError(401, "token not find");
+      throw new CustomError(401, "token not found");
     }
 
     const id = tokenService.verifyAccessToken(token);
@@ -26,7 +26,7 @@ export const authenticateToken = async (
     const user = await UserRepository.getOneById(id);
 
     if (!user) {
-      throw new CustomError(404, "User not find");
+      throw new CustomError(404, "User not found");
     }
 
     req.user = user;

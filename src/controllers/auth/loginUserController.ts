@@ -5,7 +5,7 @@ import {
   TokensType,
   UserFromRequest,
 } from "../../types/types";
-import UserService from "../../services/UserService";
+import AuthService from "../../services/AuthService";
 
 interface IReqData {
   email: string;
@@ -24,7 +24,7 @@ export const loginUserController = async (
 ) => {
   try {
     const { email, password } = req.body;
-    const user = await UserService.loginUser(email, password);
+    const user = await AuthService.loginUser(email, password);
 
     res.status(200).send({
       payload: {
