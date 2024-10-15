@@ -6,16 +6,17 @@ import { editUserController } from "../controllers/users/editUserController";
 import { validateRequestBody } from "../middleware/validateRequestBody";
 import { editPasswordController } from "../controllers/users/editPasswordController";
 import { deleteUserController } from "../controllers/users/deleteUserController";
-import { editUserSchame } from "../services/validation/schemas/editSchema";
+import { editUserSchama } from "../services/validation/schemas/editSchema";
 import { editPasswordSchema } from "../services/validation/schemas/editPasswordSchema";
+import { getUserSchama } from "../services/validation/schemas/getUserSchema";
 
 const userRouter = Router();
 
-userRouter.get("/:id", getUserController);
+userRouter.get("/:id", validateRequestBody(getUserSchama), getUserController);
 userRouter.get("/all", getAllUsersController);
 userRouter.put(
   "/edit",
-  validateRequestBody(editUserSchame),
+  validateRequestBody(editUserSchama),
   authenticateToken,
   editUserController,
 );

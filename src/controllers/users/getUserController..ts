@@ -4,12 +4,12 @@ import { User } from "../../database/entitys/User";
 import UserService from "../../services/UserService";
 import { CustomError } from "../../services/ErrorService";
 
-interface IQuery {
-  id: string;
+interface IParams {
+  id: number;
 }
 
 export const getUserController = async (
-  req: Request<IQuery, unknown, unknown>,
+  req: Request<IParams, unknown, unknown>,
   res: ResponseWithBody<User>,
   next: NextFunction,
 ) => {

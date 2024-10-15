@@ -3,20 +3,20 @@ import { validateRequestBody } from "../middleware/validateRequestBody";
 import { loginUserController } from "../controllers/auth/loginUserController";
 import { registrationUserController } from "../controllers/auth/registrationUserController";
 import { refreshAccessTokenController } from "../controllers/auth/refreshAccessTokenController";
-import { loginSchame } from "../services/validation/schemas/loginSchame";
-import { registrationSchame } from "../services/validation/schemas/registrationSchame";
+import { loginSchama } from "../services/validation/schemas/loginSchama";
+import { registrationSchama } from "../services/validation/schemas/registrationSchama";
 import { refreshAccessTokenSchema } from "../services/validation/schemas/refreshAccessTokenSchema";
 
 const authRouter = Router();
 
 authRouter.post(
   "/login",
-  validateRequestBody(loginSchame),
+  validateRequestBody(loginSchama),
   loginUserController,
 );
 authRouter.post(
   "/registration",
-  validateRequestBody(registrationSchame),
+  validateRequestBody(registrationSchama),
   registrationUserController,
 );
 authRouter.post(

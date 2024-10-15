@@ -1,6 +1,6 @@
 import { object, string } from "yup";
-import { VALIDATION_FOR_YUP } from "./shemasData";
+import { commonSchema } from "./schemasData";
 
 export const refreshAccessTokenSchema = object({
-  refreshToken: VALIDATION_FOR_YUP.refreshToken.required(),
+  refreshToken: commonSchema.refreshToken.required(),
 });

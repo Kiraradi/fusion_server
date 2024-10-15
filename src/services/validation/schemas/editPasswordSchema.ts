@@ -1,10 +1,10 @@
 import { object } from "yup";
-import { VALIDATION_FOR_YUP } from "./shemasData";
+import { commonSchema } from "./schemasData";
 
 export const editPasswordSchema = object()
   .shape({
-    password: VALIDATION_FOR_YUP.password.required(),
-    newPassword: VALIDATION_FOR_YUP.password.required(),
+    password: commonSchema.password.required(),
+    newPassword: commonSchema.password.required(),
   })
   .test(
     "check password test",

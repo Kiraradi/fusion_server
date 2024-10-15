@@ -5,13 +5,18 @@ import { CustomError } from "../services/ErrorService";
 
 export const validateRequestBody =
   (schema: ObjectSchema<AnyObject>) =>
-  async (req: Request, res: ResponseWithBody<unknown>, next: NextFunction) => {
+  async (
+    req: Request<object>,
+    res: ResponseWithBody<unknown>,
+    next: NextFunction,
+  ) => {
     try {
       await schema
         .noUnknown(true, "Unknown fields were passed in the request")
         .validate(
           {
             ...req.body,
+            ...req.params,
           },
           { abortEarly: false, strict: false, stripUnknown: false },
         );
