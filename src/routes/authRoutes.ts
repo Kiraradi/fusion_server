@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { validateRequestBody } from "../middleware/validateRequestBody";
 import { loginUserController } from "../controllers/auth/loginUserController";
-import { loginSchame } from "../schemas/loginSchame";
-import { registrationSchame } from "../schemas/registrationSchame";
 import { registrationUserController } from "../controllers/auth/registrationUserController";
-import { refreshAccessTokenSchema } from "../schemas/refreshAccessTokenSchema";
 import { refreshAccessTokenController } from "../controllers/auth/refreshAccessTokenController";
+import { loginSchame } from "../services/validation/schemas/loginSchame";
+import { registrationSchame } from "../services/validation/schemas/registrationSchame";
+import { refreshAccessTokenSchema } from "../services/validation/schemas/refreshAccessTokenSchema";
 
 const authRouter = Router();
 

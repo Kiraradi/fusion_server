@@ -1,6 +1,6 @@
 import { NextFunction, Request } from "express";
 import UserRepository from "../database/repositories/userRepository";
-import tokenService from "../services/tokenService";
+import tokenService from "../services/TokenService";
 import { ResponseWithBody } from "../types/types";
 import { CustomError } from "../services/customError";
 

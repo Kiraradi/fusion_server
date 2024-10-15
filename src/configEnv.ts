@@ -2,12 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const REGEX_FOR_YUP = {
-  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/,
-  dayOfBirthday: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.([12][0-9]{3})$/,
-};
-
-export const PROCESS_ENV = {
+export const CONFIG_ENV = {
   TOKEN_SECRET: String(process.env.TOKEN_SECRET),
   REFRESH_TOKEN_SECRET: String(process.env.REFRESH_TOKEN_SECRET),
   SERVER_PORT: Number(process.env.SERVER_PORT),
@@ -19,4 +14,8 @@ export const PROCESS_ENV = {
   SERVER_HASH_DIGEST: String(process.env.SERVER_HASH_DIGEST),
   SERVER_HASH_ITERATIONS: Number(process.env.SERVER_HASH_ITERATIONS),
   SERVER_HASH_BYTES: Number(process.env.SERVER_HASH_BYTES),
+  SERVER_ACCESS_TOKEN_EXPIRES: String(process.env.SERVER_ACCESS_TOKEN_EXPIRES),
+  SERVER_REFRESH_TOKEN_EXPIRES: String(
+    process.env.SERVER_REFRESH_TOKEN_EXPIRES,
+  ),
 };

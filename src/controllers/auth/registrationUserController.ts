@@ -1,4 +1,4 @@
-import tokenService from "../../services/tokenService";
+import tokenService from "../../services/TokenService";
 import { NextFunction, Request } from "express";
 import { User } from "../../database/entitys/User";
 import {

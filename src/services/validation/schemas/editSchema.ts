@@ -1,5 +1,5 @@
 import { object, string } from "yup";
-import { REGEX_FOR_YUP } from "../constants";
+import { REGEX_FOR_YUP } from "./shemasData";
 
 export const editUserSchame = object({
   fullName: string().max(50),

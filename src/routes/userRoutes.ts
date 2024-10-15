@@ -4,10 +4,10 @@ import { getAllUsersController } from "../controllers/users/getAllUsersControlle
 import { getUserController } from "../controllers/users/getUserController.";
 import { editUserController } from "../controllers/users/editUserController";
 import { validateRequestBody } from "../middleware/validateRequestBody";
-import { editUserSchame } from "../schemas/editSchema";
-import { editPasswordSchema } from "../schemas/editPasswordSchema";
 import { editPasswordController } from "../controllers/users/editPasswordController";
 import { deleteUserController } from "../controllers/users/deleteUserController";
+import { editUserSchame } from "../services/validation/schemas/editSchema";
+import { editPasswordSchema } from "../services/validation/schemas/editPasswordSchema";
 
 const userRouter = Router();
 

@@ -1,23 +1,23 @@
 import UserRepository from "../database/repositories/userRepository";
-import { hashingPassword } from "./hashingPassword";
+import { hashPassword } from "./hashPassword";
 import { User } from "../database/entitys/User";
 import { CustomError } from "./customError";
 import { DeepPartial } from "typeorm";
 
-const registrationUser = async (user: User) => {
-  const isEmainInDatabase = await UserRepository.getOneByEmail(user.email);
+const registrationUser = async (args: User) => {
+  const isEmainInDatabase = await UserRepository.getOneByEmail(args.email);
 
   if (isEmainInDatabase) {
     throw new CustomError(404, "email is busy");
   }
-  const hashedPassword = hashingPassword(user.password);
+  const hashedPassword = hashPassword(args.password);
 
-  const userWithHash = {
-    ...user,
+  const user = {
+    ...args,
     password: hashedPassword,
   };
 
-  return await UserRepository.save(userWithHash);
+  return UserRepository.save(user);
 };
 
 const loginUser = async (email: string, password: string) => {
@@ -25,13 +25,13 @@ const loginUser = async (email: string, password: string) => {
     withPassword: true,
   });
 
-  const hashPassword = hashingPassword(password);
-
   if (!user) {
     throw new CustomError(404, "user not find");
   }
 
-  if (hashPassword !== user.password) {
+  const hashedPassword = hashPassword(password);
+
+  if (hashedPassword !== user.password) {
     throw new CustomError(400, "password invalid");
   }
 
@@ -39,10 +39,6 @@ const loginUser = async (email: string, password: string) => {
 };
 
 const getUserById = async (userId: number) => {
-  if (!userId) {
-    throw new CustomError(400, "id not find");
-  }
-
   const user = await UserRepository.getOneById(userId);
 
   if (!user) {
@@ -73,10 +69,9 @@ const editUser = async (data: Idata, userId: number) => {
     if (isEmailBusy) {
       throw new CustomError(400, "email is busy");
     }
+
+    dataToUpdate.email = email;
   }
-
-  dataToUpdate.email = email;
-
   await UserRepository.update(userId, dataToUpdate);
 
   const updatedUser = await UserRepository.getOneById(userId);
@@ -100,13 +95,13 @@ const editPassword = async (
   if (!user) {
     throw new CustomError(404, "user not find");
   }
-  const hashOldPassword = hashingPassword(password);
+  const hashOldPassword = hashPassword(password);
 
   if (user.password !== hashOldPassword) {
     throw new CustomError(400, "password invalid");
   }
 
-  const hashNewPassword = hashingPassword(newPassword);
+  const hashNewPassword = hashPassword(newPassword);
   const userWithNewPassword = { ...user, password: hashNewPassword };
 
   await UserRepository.update(userWithNewPassword.id, userWithNewPassword);

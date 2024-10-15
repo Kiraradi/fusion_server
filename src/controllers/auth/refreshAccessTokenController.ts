@@ -1,5 +1,5 @@
 import { NextFunction, Request } from "express";
-import tokenService from "../../services/tokenService";
+import tokenService from "../../services/TokenService";
 import UserRepository from "../../database/repositories/userRepository";
 import { ResponseWithBody, TokensType } from "../../types/types";
 import { CustomError } from "../../services/customError";
@@ -30,6 +30,8 @@ export const refreshAccessTokenController = async (
 
     const newAccessToken = tokenService.generateAccessToken(user.id);
     const newRefreshToken = tokenService.generateRefreshToken(user.id);
+
+    console.log(">>>>", newRefreshToken);
 
     res.status(200).send({
       payload: {

@@ -1,26 +1,26 @@
 import { JwtPayload, sign } from "jsonwebtoken";
 import { verify } from "jsonwebtoken";
-import { PROCESS_ENV } from "../constants";
+import { CONFIG_ENV } from "../configEnv";
 
 interface IJwtPayload extends JwtPayload {
   payload: number;
 }
 
 export const generateAccessToken = (userId: number): string => {
-  return sign({ payload: userId }, PROCESS_ENV.TOKEN_SECRET, {
-    expiresIn: "1800s",
+  return sign({ payload: userId }, CONFIG_ENV.TOKEN_SECRET, {
+    expiresIn: CONFIG_ENV.SERVER_ACCESS_TOKEN_EXPIRES,
   });
 };
 
 export const generateRefreshToken = (userId: number): string => {
-  return sign({ payload: userId }, PROCESS_ENV.REFRESH_TOKEN_SECRET, {
-    expiresIn: "30d",
+  return sign({ payload: userId }, CONFIG_ENV.REFRESH_TOKEN_SECRET, {
+    expiresIn: CONFIG_ENV.SERVER_REFRESH_TOKEN_EXPIRES,
   });
 };
 
 export const verifyAccessToken = (token: string) => {
   try {
-    const data = verify(token, PROCESS_ENV.TOKEN_SECRET) as IJwtPayload;
+    const data = verify(token, CONFIG_ENV.TOKEN_SECRET) as IJwtPayload;
 
     return data.payload;
   } catch (error) {
@@ -31,7 +31,7 @@ export const verifyAccessToken = (token: string) => {
 
 export const verifyRefreshToken = (token: string) => {
   try {
-    const data = verify(token, PROCESS_ENV.REFRESH_TOKEN_SECRET) as IJwtPayload;
+    const data = verify(token, CONFIG_ENV.REFRESH_TOKEN_SECRET) as IJwtPayload;
 
     return data.payload;
   } catch (error) {
