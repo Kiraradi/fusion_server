@@ -6,9 +6,9 @@ import { editUserController } from "../controllers/users/editUserController";
 import { validateRequestBody } from "../middleware/validateRequestBody";
 import { editPasswordController } from "../controllers/users/editPasswordController";
 import { deleteUserController } from "../controllers/users/deleteUserController";
-import { editUserSchama } from "../services/validation/schemas/editSchema";
-import { editPasswordSchema } from "../services/validation/schemas/editPasswordSchema";
-import { getUserSchama } from "../services/validation/schemas/getUserSchema";
+import { editUserSchama } from "../services/validation/schemas/UserSchemas/editSchema";
+import { editPasswordSchema } from "../services/validation/schemas/UserSchemas/editPasswordSchema";
+import { getUserSchama } from "../services/validation/schemas/UserSchemas/getUserSchema";
 
 const userRouter = Router();
 

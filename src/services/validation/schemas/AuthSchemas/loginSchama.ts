@@ -1,5 +1,4 @@
-import { object } from "yup";
-import { commonSchema } from "./schemasData";
+import { commonSchema } from "../schemasData";
 
 export const loginSchama = {
   body: {

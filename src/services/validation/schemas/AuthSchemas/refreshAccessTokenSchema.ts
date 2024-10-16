@@ -1,5 +1,5 @@
 import { object, string } from "yup";
-import { commonSchema } from "./schemasData";
+import { commonSchema } from "../schemasData";
 
 export const refreshAccessTokenSchema = {
   body: {
