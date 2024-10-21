@@ -9,7 +9,6 @@ export const commonSchema = {
   password: string().matches(REGEX_FOR_YUP.password),
   fullName: string().max(50),
   email: string().email(),
-  dayOfBirthday: string().matches(REGEX_FOR_YUP.dayOfBirthday),
   refreshToken: string().min(100).max(200),
   id: number(),
 };

@@ -28,7 +28,6 @@ export const getOneByEmail = async (
       fullName: true,
       email: true,
       password: true,
-      dayOfBirthday: true,
     };
   }
   const user = await userRepository.findOne(findOptions);

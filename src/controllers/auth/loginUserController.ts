@@ -36,8 +36,6 @@ export const loginUserController = async (
           id: user.id,
           fullName: user.fullName,
           email: user.email,
-          dayOfBirthday: user.dayOfBirthday,
-          address: "",
         },
       },
       message: "Success",

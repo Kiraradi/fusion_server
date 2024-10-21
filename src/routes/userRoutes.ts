@@ -12,8 +12,8 @@ import { getUserSchama } from "../services/validation/schemas/UserSchemas/getUse
 
 const userRouter = Router();
 
-userRouter.get("/:id", validateRequestBody(getUserSchama), getUserController);
 userRouter.get("/all", getAllUsersController);
+userRouter.get("/:id", validateRequestBody(getUserSchama), getUserController);
 userRouter.put(
   "/edit",
   validateRequestBody(editUserSchama),

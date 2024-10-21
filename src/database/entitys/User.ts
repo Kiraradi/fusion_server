@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   fullName: string;
 
   @Column({ unique: true })
@@ -13,10 +13,4 @@ export class User {
 
   @Column({ select: false })
   password: string;
-
-  @Column()
-  dayOfBirthday: string;
-
-  @Column({ nullable: true })
-  address: string;
 }

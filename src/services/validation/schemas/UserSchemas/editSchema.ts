@@ -5,6 +5,5 @@ export const editUserSchama = {
   body: {
     fullName: commonSchema.fullName,
     email: commonSchema.email,
-    dayOfBirthday: commonSchema.dayOfBirthday,
   },
 };
