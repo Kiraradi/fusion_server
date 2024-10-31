@@ -1,31 +1,22 @@
-import { NextFunction, Request } from "express";
+import { Request, NextFunction } from "express";
 import tokenService from "../../services/TokenService";
 import {
   ResponseWithBody,
   TokensType,
   UserFromRequest,
 } from "../../types/types";
-import AuthService from "../../services/AuthService";
-
-interface IReqData {
-  email: string;
-  password: string;
-}
 
 interface IPayload {
   tokens: TokensType;
   user: UserFromRequest;
 }
-
-export const loginUserController = async (
-  req: Request<unknown, unknown, IReqData>,
+export const getMeController = async (
+  req: Request,
   res: ResponseWithBody<IPayload>,
   next: NextFunction,
 ) => {
   try {
-    const { email, password } = req.body;
-    const user = await AuthService.loginUser(email, password);
-
+    const user = req.user;
     res.status(200).send({
       payload: {
         tokens: {

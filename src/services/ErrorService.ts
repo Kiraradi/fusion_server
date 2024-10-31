@@ -18,6 +18,7 @@ export const errorHandler = (
   if (error instanceof CustomError) {
     res.status(error.code).send({ payload: null, message: error.message });
   } else {
+    console.log("===>", error);
     res.status(500).send({ payload: null, message: "internal server error" });
   }
 

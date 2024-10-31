@@ -6,6 +6,8 @@ import { refreshAccessTokenController } from "../controllers/auth/refreshAccessT
 import { loginSchama } from "../services/validation/schemas/AuthSchemas/loginSchama";
 import { registrationSchama } from "../services/validation/schemas/AuthSchemas/registrationSchama";
 import { refreshAccessTokenSchema } from "../services/validation/schemas/AuthSchemas/refreshAccessTokenSchema";
+import { authenticateToken } from "../middleware/authenticateToken";
+import { getMeController } from "../controllers/auth/getMeController";
 
 const authRouter = Router();
 
@@ -24,5 +26,6 @@ authRouter.post(
   validateRequestBody(refreshAccessTokenSchema),
   refreshAccessTokenController,
 );
+authRouter.get("/getMe", authenticateToken, getMeController);
 
 export default authRouter;

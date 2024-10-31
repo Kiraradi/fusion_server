@@ -24,7 +24,7 @@ export const verifyAccessToken = (token: string) => {
 
     return data.payload;
   } catch (error) {
-    console.log(error);
+    console.log("verifyAccessToken==>", error);
     return null;
   }
 };
@@ -35,7 +35,7 @@ export const verifyRefreshToken = (token: string) => {
 
     return data.payload;
   } catch (error) {
-    console.log(error);
+    console.log("verifyRefreshToken==>", error);
     return null;
   }
 };

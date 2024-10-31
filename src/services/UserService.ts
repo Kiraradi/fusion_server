@@ -10,6 +10,10 @@ interface IEditUserData {
   dayOfBirthday?: string;
 }
 
+interface iSaveAvatar {
+  avatar: string;
+}
+
 const getUserById = async (userId: number) => {
   const user = await UserRepository.getOneById(userId);
 
@@ -49,6 +53,18 @@ const editUser = async (data: IEditUserData, userId: number) => {
   return updatedUser;
 };
 
+const saveAvatar = async (data: iSaveAvatar, userId: number) => {
+  await UserRepository.update(userId, data);
+
+  const updatedUser = await UserRepository.getOneById(userId);
+
+  if (!updatedUser) {
+    throw new CustomError(404, "user not found");
+  }
+
+  return updatedUser;
+};
+
 const editPassword = async (
   password: string,
   newPassword: string,
@@ -77,4 +93,5 @@ export default {
   getUserById,
   editUser,
   editPassword,
+  saveAvatar,
 };

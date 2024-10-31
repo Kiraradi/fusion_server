@@ -9,6 +9,8 @@ import { deleteUserController } from "../controllers/users/deleteUserController"
 import { editUserSchama } from "../services/validation/schemas/UserSchemas/editSchema";
 import { editPasswordSchema } from "../services/validation/schemas/UserSchemas/editPasswordSchema";
 import { getUserSchama } from "../services/validation/schemas/UserSchemas/getUserSchema";
+import { saveAvatarController } from "../controllers/users/saveAvatarController";
+import { saveAvatarSchema } from "../services/validation/schemas/UserSchemas/saveAvatarSchema";
 
 const userRouter = Router();
 
@@ -19,6 +21,12 @@ userRouter.put(
   validateRequestBody(editUserSchama),
   authenticateToken,
   editUserController,
+);
+userRouter.post(
+  "/saveAvatar",
+  validateRequestBody(saveAvatarSchema),
+  authenticateToken,
+  saveAvatarController,
 );
 userRouter.put(
   "/editPassword",

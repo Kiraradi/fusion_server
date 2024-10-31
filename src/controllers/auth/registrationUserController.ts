@@ -33,6 +33,7 @@ export const registrationUserController = async (
           id: user.id,
           fullName: user.fullName,
           email: user.email,
+          avatar: user.avatar,
         },
       },
       message: "Success",

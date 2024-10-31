@@ -14,11 +14,10 @@ export const refreshAccessTokenController = async (
 ) => {
   try {
     const refreshToken = req.body.refreshToken;
-
     const id = tokenService.verifyRefreshToken(refreshToken);
 
     if (!id) {
-      throw new CustomError(400, "invalid token");
+      throw new CustomError(401, "invalid token");
     }
 
     const user = await UserRepository.getOneById(id);
@@ -29,8 +28,6 @@ export const refreshAccessTokenController = async (
 
     const newAccessToken = tokenService.generateAccessToken(user.id);
     const newRefreshToken = tokenService.generateRefreshToken(user.id);
-
-    console.log(">>>>", newRefreshToken);
 
     res.status(200).send({
       payload: {

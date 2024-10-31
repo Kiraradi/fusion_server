@@ -11,4 +11,6 @@ export const commonSchema = {
   email: string().email(),
   refreshToken: string().min(100).max(200),
   id: number(),
+  baseImg: string(),
+  extension: string(),
 };
