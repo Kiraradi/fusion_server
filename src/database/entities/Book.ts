@@ -22,7 +22,7 @@ export class Book {
     type: "enum",
     enum: ["Fantasy", "Travel", "Autobiography"],
   })
-  genre: GenresType[];
+  genre: GenresType;
 
   @Column()
   author: string;
