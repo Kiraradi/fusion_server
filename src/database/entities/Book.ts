@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Author } from "./Author";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { GenresType } from "../../types/types";
 
 @Entity()
@@ -25,6 +24,6 @@ export class Book {
   })
   genre: GenresType[];
 
-  @ManyToOne(() => Author, (author) => author.books)
-  author: Author;
+  @Column()
+  author: string;
 }
