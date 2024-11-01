@@ -1,7 +1,7 @@
 import { NextFunction, Request } from "express";
 import UserRepositiry from "../../database/repositories/userRepository";
 import { ResponseWithBody } from "../../types/types";
-import { User } from "../../database/entitys/User";
+import { User } from "../../database/entities/User";
 
 export const getAllUsersController = async (
   req: Request,

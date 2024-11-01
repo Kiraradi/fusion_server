@@ -1,6 +1,6 @@
 import tokenService from "../../services/TokenService";
 import { NextFunction, Request } from "express";
-import { User } from "../../database/entitys/User";
+import { User } from "../../database/entities/User";
 import {
   TokensType,
   UserFromRequest,

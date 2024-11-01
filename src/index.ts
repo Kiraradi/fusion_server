@@ -19,7 +19,7 @@ const PORT = process.env.SERVER_PORT;
   }
 })();
 
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json({ limit: "10mb" }));
 app.use(globalRouter);
 app.use(express.static("public"));
 app.use(ErrorService.errorHandler);

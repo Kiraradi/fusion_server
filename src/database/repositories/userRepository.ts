@@ -1,6 +1,6 @@
 import { DeepPartial, FindOneOptions } from "typeorm";
 import { AppDataSource } from "../dataSource";
-import { User } from "../entitys/User";
+import { User } from "../entities/User";
 
 export const userRepository = AppDataSource.getRepository(User);
 

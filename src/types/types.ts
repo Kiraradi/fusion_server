@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { User } from "../database/entitys/User";
+import { User } from "../database/entities/User";
 
 export type UserFromRequest = Omit<User, "password">;
 

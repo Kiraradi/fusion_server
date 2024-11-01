@@ -1,6 +1,6 @@
 import { NextFunction, Request } from "express";
 import { ResponseWithBody } from "../../types/types";
-import { User } from "../../database/entitys/User";
+import { User } from "../../database/entities/User";
 import UserService from "../../services/UserService";
 import { CustomError } from "../../services/ErrorService";
 

@@ -1,6 +1,6 @@
 import UserRepository from "../database/repositories/userRepository";
 import { hashPassword } from "../utils/hashPassword";
-import { User } from "../database/entitys/User";
+import { User } from "../database/entities/User";
 import { CustomError } from "./ErrorService";
 
 const registrationUser = async (args: User) => {
