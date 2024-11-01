@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 const publicPath = path.normalize(__dirname + `/../../public`);
-console.log(">>>>>", publicPath);
 const uploadsPath = `${publicPath}/uploads/`;
 const avatarPath = "/uploads/avatars/";
 const saveAvatar = (baseImage: string, extension: string) => {

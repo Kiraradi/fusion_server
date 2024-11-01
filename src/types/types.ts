@@ -20,3 +20,5 @@ export interface ICustomException extends Error {
   status: number;
   message: string;
 }
+
+export type GenresType = "Fantasy" | "Travel" | "Autobiography";

@@ -28,8 +28,6 @@ export const saveAvatarController = async (
       { avatar: avatarPath },
       user.id,
     );
-    // IMG ent
-    // проверка на картинку
     if (oldAvatarPath) {
       FileService.deleteFile(oldAvatarPath);
     }

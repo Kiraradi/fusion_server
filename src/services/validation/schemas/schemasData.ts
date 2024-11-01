@@ -3,6 +3,7 @@ import { number, string } from "yup";
 export const REGEX_FOR_YUP = {
   password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/,
   dayOfBirthday: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.([12][0-9]{3})$/,
+  extension: /^(gif|jpe?g|tiff?|png|svg|webp|bmp)$/,
 };
 
 export const commonSchema = {
@@ -12,5 +13,5 @@ export const commonSchema = {
   refreshToken: string().min(100).max(200),
   id: number(),
   baseImg: string(),
-  extension: string(),
+  extension: string().matches(REGEX_FOR_YUP.extension),
 };
